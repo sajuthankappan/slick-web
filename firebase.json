@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "slick",
+    "site": "slick-saju",
     "public": "__sapper__/export",
     "ignore": [
       "firebase.json",
