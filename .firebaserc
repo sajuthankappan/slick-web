@@ -1,14 +1,5 @@
 {
   "projects": {
-    "production": "sajudev"
-  },
-  "targets": 
-    "sajudev": {
-      "hosting": {
-        "slick": [
-          "slick"
-        ]
-      }
-    }
+    "default": "sajudev"
   }
 }

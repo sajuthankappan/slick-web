@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "sapper dev",
     "build": "sapper build",
-    "export": "sapper export --entry \"/ /login /dashboard /stats /activities /profile /settings /about /sitemap /strava/account /strava/authcheck\"",
+    "export": "sapper export --entry \"/ /login /dashboard /stats /reports /profile /settings /about /sitemap\"",
     "start": "node __sapper__/build",
     "cy:run": "cypress run",
     "cy:open": "cypress open",
