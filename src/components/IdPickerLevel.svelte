@@ -1,18 +1,22 @@
 <script>
   import { createEventDispatcher, onMount } from 'svelte';
 
-  let reportId;
+  export let initialId = '';
+  export let label;
+  
+  let id;
   let lhVersion = 'v6';
 
   const dispatch = createEventDispatcher();
 
   onMount(async () => {
+    id = initialId;
   });
 
   async function handleRetrieveClick(e) {
     e.preventDefault();
 
-    dispatch('retrieve', { reportId });
+    dispatch('retrieve', { id });
   }
 </script>
 
@@ -23,14 +27,14 @@
       <form on:submit={handleRetrieveClick}>
         <div class="field is-horizontal">
           <div class="field-label is-normal">
-            <label class="label">Id</label>
+            <label class="label">{label}</label>
           </div>
           <div class="field-body">
             <div class="field has-addons">
               <div class="control">
                 <input
                   class="input"
-                  bind:value={reportId}
+                  bind:value={id}
                   type="text" />
               </div>
               <div class="control">
