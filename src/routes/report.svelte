@@ -50,7 +50,10 @@
   </div>
 
   <section class="section">
-    <IdPickerLevel label="Report ID" id={reportId} on:retrieve={handleRetrieveClick} />
+    <IdPickerLevel label="Report ID" 
+      id={reportId} 
+      on:retrieve={handleRetrieveClick}
+    />
 
     {#await promise}
       <Loading />

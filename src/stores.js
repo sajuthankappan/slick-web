@@ -7,3 +7,4 @@ export const loading = writable(true);
 export const siteId = writable('');
 export const pageId = writable('');
 export const reportId = writable('');
+export const siteTreadId = writable('');
