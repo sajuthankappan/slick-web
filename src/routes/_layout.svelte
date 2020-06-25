@@ -16,7 +16,7 @@
 {#if !$loading}
   <Nav {segment} />
 
-  {#if !$currentUser && segment !== 'login'}
+  {#if !$currentUser && segment !== 'login' && segment != 'report'}
     <Login />
   {:else}
     <main>

@@ -39,7 +39,7 @@
             currentUser.set(null);
             loading.set(false);
             NProgress.done();
-            goto("/login");
+            //goto("/login");
           }
         },
         function(error) {

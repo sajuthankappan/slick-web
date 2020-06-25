@@ -1,23 +1,36 @@
 <script>
   import { onMount } from 'svelte';
+  import { stores } from '@sapper/app';
   import { currentUser } from '../stores';
   import { getReportSummary } from '../helpers/data/reports';
   import { getLighthouseCalculatorUrl } from '../helpers/lighthouse/calc';
   import Loading from '../components/Loading.svelte';
   import HttpError from '../components/HttpError.svelte';
   import IdPickerLevel from '../components/IdPickerLevel.svelte';
+  import WebVitals from '../components/WebVitals.svelte';
 
   let reportId;
   let promise;
 
+  const { page } = stores();
+  const { query } = $page;
+
   async function retrieve() {
-    const idToken = await $currentUser.getIdToken();
-    const reportSummary = await getReportSummary(reportId, idToken);
-    return reportSummary;
+    if ($currentUser) {
+      const idToken = await $currentUser.getIdToken();
+      const reportSummary = await getReportSummary(reportId, idToken);
+      return reportSummary;
+    } else {
+      const reportSummary = await getReportSummary(reportId);
+      return reportSummary;
+    }
   }
 
   onMount(async () => {
-    // promise = retrieve();
+    if (query && query.id) {
+      reportId = query.id;
+      promise = retrieve();
+    }
   });
 
   async function handleRetrieveClick(e) {
@@ -37,7 +50,7 @@
   </div>
 
   <section class="section">
-    <IdPickerLevel label="Report ID" on:retrieve={handleRetrieveClick} />
+    <IdPickerLevel label="Report ID" id={reportId} on:retrieve={handleRetrieveClick} />
 
     {#await promise}
       <Loading />
@@ -52,72 +65,7 @@
             <a href={getLighthouseCalculatorUrl(report)}>{report.categories.performance.score}</a>
           </div>
         </div>
-        <div class="columns is-multiline">
-          <div class="column">
-            <div class="field">
-              <label class="label">FCP (First Contentful Paint)</label>
-              <div class="control">
-                {report.webVitals.firstContentfulPaint.displayValue} (Score: {report.webVitals.firstContentfulPaint.score})
-              </div>
-            </div>
-            <div class="field">
-              <label class="label">SI (Speed Index)</label>
-              <div class="control">
-                {report.webVitals.speedIndex.displayValue} (Score: {report.webVitals.speedIndex.score})
-              </div>
-            </div>
-            <div class="field">
-              <label class="label">LCP (Largest Contentful Paint)</label>
-              <div class="control">
-                {#if report.webVitals.largestContentfulPaint}
-                  {report.webVitals.largestContentfulPaint.displayValue} (Score: {report.webVitals.largestContentfulPaint.score})
-                {/if}
-              </div>
-            </div>
-          </div>
-          <div class="column">
-            <div class="field">
-              <label class="label">TTI (Time to Interactive)</label>
-              <div class="control">
-                {report.webVitals.interactive.displayValue} (Score: {report.webVitals.interactive.score})
-              </div>
-            </div>
-            <div class="field">
-              <label class="label">TBT (Total Blocking Time)</label>
-              <div class="control">
-                {report.webVitals.totalBlockingTime.displayValue} (Score: {report.webVitals.totalBlockingTime.score})
-              </div>
-            </div>
-            <div class="field">
-              <label class="label">CLS (Cumulative Layout Shift)</label>
-              <div class="control">
-                {#if report.webVitals.cumulativeLayoutShift}
-                  {report.webVitals.cumulativeLayoutShift.displayValue} (Score: {report.webVitals.cumulativeLayoutShift.score})
-                {/if}
-              </div>
-            </div>
-          </div>
-          <div class="column">
-            <div class="field">
-              <label class="label">FMP (First Meaningful Paint)</label>
-              <div class="control">
-                {report.webVitals.firstMeaningfulPaint.displayValue} (Score: {report.webVitals.firstMeaningfulPaint.score})
-              </div>
-            </div>
-            <div class="field">
-              <label class="label">FCI (First CPU Idle)</label>
-              <div class="control">
-                {report.webVitals.firstCpuIdle.displayValue} (Score: {report.webVitals.firstCpuIdle.score})
-              </div>
-            </div>
-            <div class="field">
-              <label class="label">FID (Max Potential First Input Delay)</label>
-              <div class="control">
-                {report.webVitals.maxPotentialFid.displayValue} (Score: {report.webVitals.maxPotentialFid.score})
-              </div>
-            </div>
-          </div>
-        </div>
+        <WebVitals webVitals={report.webVitals} />
       {/if}
     {:catch error}
       <HttpError error={error} />

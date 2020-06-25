@@ -1,17 +1,24 @@
 <script>
-  import { onMount } from 'svelte';
-  import { currentUser, siteId, pageId } from '../stores';
-  import { getSite } from '../helpers/data/reports';
-  import Loading from '../components/Loading.svelte';
-  import HttpError from '../components/HttpError.svelte';
-  import IdPickerLevel from '../components/IdPickerLevel.svelte';
+  import { onMount } from "svelte";
+  import { currentUser, siteId, pageId } from "../stores";
+  import { getSite, getSiteTreads } from "../helpers/data/reports";
+  import Loading from "../components/Loading.svelte";
+  import HttpError from "../components/HttpError.svelte";
+  import IdPickerLevel from "../components/IdPickerLevel.svelte";
 
-  let promise;
+  let sitePromise;
+  let siteTreadsPromise;
 
-  async function retrieve() {
+  async function retrieveSite() {
     const idToken = await $currentUser.getIdToken();
     const site = await getSite($siteId, idToken);
     return site;
+  }
+
+  async function retrieveSiteTreads() {
+    const idToken = await $currentUser.getIdToken();
+    const siteTreads = await getSiteTreads($siteId, idToken);
+    return siteTreads;
   }
 
   onMount(async () => {
@@ -21,11 +28,16 @@
   async function handleRetrieveClicked(e) {
     e.preventDefault();
     siteId.set(e.detail.id);
-    promise = retrieve();
+    sitePromise = retrieveSite();
+    siteTreadsPromise = retrieveSiteTreads();
   }
 
   async function handleSelectPageClicked(pageName) {
     pageId.set(pageName);
+  }
+
+  async function handleSelectTreadClicked(treadId) {
+    siteId.set(treadId);
   }
 </script>
 
@@ -41,10 +53,10 @@
   <section class="section">
     <IdPickerLevel
       label="Site ID"
-      initialId={$siteId}
+      id={$siteId}
       on:retrieve={handleRetrieveClicked} />
 
-    {#await promise}
+    {#await sitePromise}
       <Loading />
     {:then site}
       {#if site}
@@ -66,7 +78,13 @@
                 </td>
                 <td>
                   <div class="buttons">
-                    <button class="button is-small" on:click={() => { handleSelectPageClicked(page.name); }}>Select</button>
+                    <button
+                      class="button is-small"
+                      on:click={() => {
+                        handleSelectPageClicked(page.name);
+                      }}>
+                      Select
+                    </button>
                   </div>
                 </td>
               </tr>
@@ -74,6 +92,46 @@
           </tbody>
         </table>
         <div>Selected page: {$pageId}</div>
+      {/if}
+    {:catch error}
+      <HttpError {error} />
+    {/await}
+    {#await siteTreadsPromise}
+      <Loading />
+    {:then treads}
+      {#if treads}
+        <table class="table">
+          <caption>Treads</caption>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>ID</th>
+              <th>Select</th>
+            </tr>
+          </thead>
+          <tbody>
+            {#each treads as tread}
+              <tr>
+                <th>{tread.siteName}</th>
+                <td>
+                  {tread._id.$oid}
+                </td>
+                <td>
+                  <div class="buttons">
+                    <button
+                      class="button is-small"
+                      on:click={() => {
+                        handleSelectTreadClicked(tread.siteId.$oid);
+                      }}>
+                      Select
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            {/each}
+          </tbody>
+        </table>
+        <div>Selected tread: {$siteId}</div>
       {/if}
     {:catch error}
       <HttpError {error} />

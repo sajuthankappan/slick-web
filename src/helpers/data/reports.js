@@ -17,3 +17,15 @@ export async function getSite(siteId, idToken) {
   const report = await sfetch.get(url, idToken);
   return report;
 }
+
+export async function getTread(treadId, idToken) {
+  const url = `/treads/${treadId}`;
+  const report = await sfetch.get(url, idToken);
+  return report;
+}
+
+export async function getSiteTreads(siteId, idToken) {
+  const url = `/site-treads/${siteId}`;
+  const report = await sfetch.get(url, idToken);
+  return report;
+}
