@@ -41,7 +41,7 @@
 </script>
 
 <svelte:head>
-  <title>Report</title>
+  <title>Report | Slick</title>
 </svelte:head>
 
 <div class="container">

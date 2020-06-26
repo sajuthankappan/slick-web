@@ -42,7 +42,7 @@
 </script>
 
 <svelte:head>
-  <title>Sign In</title>
+  <title>Sign In | Slick</title>
 </svelte:head>
 
 <div class="container">

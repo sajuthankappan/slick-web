@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-  <title>Dashboard</title>
+  <title>Stats | Slick</title>
 </svelte:head>
 
 <div class="container">

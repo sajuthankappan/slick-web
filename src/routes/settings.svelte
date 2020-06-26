@@ -84,8 +84,9 @@
 </script>
 
 <svelte:head>
-  <title>Settings</title>
+  <title>Settings | Svelte</title>
 </svelte:head>
+
 <div class="container">
   <div class="box">
     <h1 class="title has-text-centered">Settings</h1>

@@ -3,6 +3,10 @@
   import { signOut } from '../helpers/firebase/auth';
 </script>
 
+<svelte:head>
+  <title>Profile | Slick</title>
+</svelte:head>
+
 <div class="container">
   {#if $currentUser}
     <section class="hero is-light">

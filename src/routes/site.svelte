@@ -68,7 +68,7 @@
 </script>
 
 <svelte:head>
-  <title>Sites</title>
+  <title>Site | Slick</title>
 </svelte:head>
 
 <div class="container">
