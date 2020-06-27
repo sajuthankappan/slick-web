@@ -6,7 +6,7 @@ export async function getReports(idToken) {
   return reports;
 }
 
-export async function getReportSummary(reportId, idToken) {
+export async function getReport(reportId, idToken) {
   const url = `/reports/${reportId}`;
   const report = await sfetch.get(url, idToken);
   return report;

@@ -2,7 +2,7 @@
   import { onMount } from 'svelte';
   import { stores } from '@sapper/app';
   import { currentUser } from '../stores';
-  import { getReportSummary } from '../helpers/data/reports';
+  import { getReport } from '../helpers/data/reports';
   import { getLighthouseCalculatorUrl } from '../helpers/lighthouse/calc';
   import Loading from '../components/Loading.svelte';
   import HttpError from '../components/HttpError.svelte';
@@ -18,11 +18,11 @@
   async function retrieve() {
     if ($currentUser) {
       const idToken = await $currentUser.getIdToken();
-      const reportSummary = await getReportSummary(reportId, idToken);
-      return reportSummary;
+      const report = await getReport(reportId, idToken);
+      return report;
     } else {
-      const reportSummary = await getReportSummary(reportId);
-      return reportSummary;
+      const report = await getReport(reportId);
+      return report;
     }
   }
 
