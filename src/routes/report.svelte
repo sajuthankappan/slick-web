@@ -8,6 +8,8 @@
   import HttpError from '../components/HttpError.svelte';
   import IdPickerLevel from '../components/IdPickerLevel.svelte';
   import WebVitals from '../components/WebVitals.svelte';
+  import LargestContentfulPaintElement from '../components/largestContentfulPaintElement.svelte';
+  import NetworkRequests from '../components/NetworkRequests.svelte';
 
   let reportId;
   let promise;
@@ -68,7 +70,15 @@
             <a href={getLighthouseCalculatorUrl(report)}>{report.categories.performance.score}</a>
           </div>
         </div>
-        <WebVitals webVitals={report.webVitals} />
+        <WebVitals data={report.webVitals} />
+        {#if report.largestContentfulPaintElement}
+          <div class="has-text-weight-bold">Largest Contentful Paint Element</div>
+          <LargestContentfulPaintElement data={report.largestContentfulPaintElement} />
+        {/if}
+        {#if report.networkRequests}
+          <div class="has-text-weight-bold">Network Requests</div>
+          <NetworkRequests data={report.networkRequests} />
+        {/if}
       {/if}
     {:catch error}
       <HttpError error={error} />
