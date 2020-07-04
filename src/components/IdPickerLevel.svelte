@@ -3,6 +3,7 @@
 
   export let id = '';
   export let label;
+  export let showVersion = false;
   
   let lhVersion = '6.0.0';
 
@@ -50,25 +51,27 @@
 
   <!-- Right side -->
   <div class="level-right">
-    <p class="level-item">
-      <a
-        href="javascript:void(0)"
-        on:click={() => {
-          lhVersion = '6.0.0';
-          dispatch('versionChange', { lhVersion });
-        }}>
-        <div class:has-text-weight-bold={lhVersion === '6.0.0'}>v6</div>
-      </a>
-    </p>
-    <p class="level-item">
-      <a
-        href="javascript:void(0)"
-        on:click={() => {
-          lhVersion = '5.6.0';
-          dispatch('versionChange', { lhVersion });
-        }}>
-        <div class:has-text-weight-bold={lhVersion === '5.6.0'}>v5</div>
-      </a>
-    </p>
+    {#if showVersion}
+      <p class="level-item">
+        <a
+          href="javascript:void(0)"
+          on:click={() => {
+            lhVersion = '6.0.0';
+            dispatch('versionChange', { lhVersion });
+          }}>
+          <div class:has-text-weight-bold={lhVersion === '6.0.0'}>v6</div>
+        </a>
+      </p>
+      <p class="level-item">
+        <a
+          href="javascript:void(0)"
+          on:click={() => {
+            lhVersion = '5.6.0';
+            dispatch('versionChange', { lhVersion });
+          }}>
+          <div class:has-text-weight-bold={lhVersion === '5.6.0'}>v5</div>
+        </a>
+      </p>
+    {/if}
   </div>
 </nav>

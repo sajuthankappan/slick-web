@@ -26,7 +26,7 @@
     </thead>
     <tbody>
       {#each data.details.items as item, index}
-        <tr>
+        <tr class:has-background-warning={item.statusCode !== 200}>
           <td>{index + 1}</td>
           <td><div class="url">{item.url}</div></td>
           <td>{Math.round(item.startTime)}</td>

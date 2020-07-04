@@ -80,6 +80,7 @@
     <IdPickerLevel
       label="Site ID"
       id={$siteId}
+      showVersion={true}
       on:retrieve={handleRetrieveSiteClicked}
       on:versionChange={handleVersionChanged}
     />
