@@ -10,6 +10,7 @@
   import WebVitals from '../components/WebVitals.svelte';
   import LargestContentfulPaintElement from '../components/largestContentfulPaintElement.svelte';
   import NetworkRequests from '../components/NetworkRequests.svelte';
+  import NetworkRequestsChart from '../components/NetworkRequestsChart.svelte';
 
   let reportId;
   let promise;
@@ -76,6 +77,8 @@
           <LargestContentfulPaintElement data={report.largestContentfulPaintElement} />
         {/if}
         {#if report.networkRequests}
+          <div class="has-text-weight-bold">Network Chart</div>
+          <NetworkRequestsChart data={report.networkRequests} />
           <div class="has-text-weight-bold">Network Requests</div>
           <NetworkRequests data={report.networkRequests} />
         {/if}

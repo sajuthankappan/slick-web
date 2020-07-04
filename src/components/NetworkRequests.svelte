@@ -2,10 +2,17 @@
   export let data;
 </script>
 
-<div class="table-container">
+<style>
+  .url {
+    max-width: 500px;
+  }
+</style>
+
+<div class="table-container is-size-7">
   <table class="table">
     <thead>
       <tr>
+        <th>#</th>
         <th>URL</th>
         <th>Start Time</th>
         <th>End Time</th>
@@ -18,13 +25,13 @@
       </tr>
     </thead>
     <tbody>
-      {#each data.details.items as item}
+      {#each data.details.items as item, index}
         <tr>
-          <td>{item.url}</td>
-          <td>{item.startTime}</td>
-          <td>{item.endTime}</td>
+          <td>{index + 1}</td>
+          <td><div class="url">{item.url}</div></td>
+          <td>{Math.round(item.startTime)}</td>
+          <td>{Math.round(item.endTime)}</td>
           <td>{item.finished}</td>
-          <td>{item.endTime}</td>
           <td>{item.transferSize}</td>
           <td>{item.resourceSize}</td>
           <td>{item.statusCode}</td>

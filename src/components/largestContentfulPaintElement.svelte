@@ -2,7 +2,7 @@
   export let data;
 </script>
 
-<div class="table-container">
+<div class="table-container is-size-7">
   <table class="table">
     <thead>
       <tr>
