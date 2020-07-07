@@ -199,7 +199,7 @@
                     Score: {score} (Lighouse {lhVersion})
                   </div>
                   <div>
-                    Detailed Report: <a href={`/report/?id=${reportId}`}>{reportId}</a>
+                    Report: <a href={`/report/?id=${reportId}`}>{reportId}</a>
                   </div>
                 </div>
               </div>
