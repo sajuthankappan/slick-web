@@ -29,3 +29,9 @@ export async function getSiteTreads(siteId, idToken) {
   const report = await sfetch.get(url, idToken);
   return report;
 }
+
+export async function getTrend(siteId, pageId, auditProfileId, idToken) {
+  const url = `/trend/${siteId}/${pageId}/${auditProfileId}`;
+  const report = await sfetch.get(url, idToken);
+  return report;
+}

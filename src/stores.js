@@ -6,5 +6,6 @@ export const currentUserClaims = writable(null);
 export const loading = writable(true);
 export const siteId = writable('');
 export const pageId = writable('');
+export const auditProfileId = writable('');
 export const reportId = writable('');
-export const siteTreadId = writable('');
+export const siteRunId = writable('');

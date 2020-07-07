@@ -2,9 +2,9 @@
 
 <a
   class="navbar-item"
-  class:has-text-weight-bold={segment === 'site'}
-  href="/site">
-  Site
+  class:has-text-weight-bold={segment === 'trend'}
+  href="/trend">
+  Trend
 </a>
 <a
   class="navbar-item"
