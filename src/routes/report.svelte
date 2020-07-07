@@ -24,10 +24,10 @@
       const idToken = await $currentUser.getIdToken();
       const report = await getReport(reportId, idToken);
       return report;
-    } else {
-      const report = await getReport(reportId);
-      return report;
     }
+  
+    const report = await getReport(reportId);
+    return report;
   }
 
   onMount(async () => {
@@ -63,11 +63,10 @@
       <Loading />
     {:then report}
       {#if report}
-        <div class="field box has-text-centered">
-          <div>Lighthouse Version: {report.lighthouseVersion}</div>
+        <div class="box has-text-centered">
           <div><a href={report.requestedUrl}>{report.requestedUrl}</a></div>
           <div>Report Time: {report.fetchTime}</div>
-          <label class="label">Score ({report.configSettings.emulatedFormFactor})</label>
+          <label class="label">Score (Lighthouse {report.lighthouseVersion} {report.configSettings.emulatedFormFactor}) </label>
           <div class="control has-text-centered">
             <a href={getLighthouseCalculatorUrl(report)}>{report.categories.performance.score}</a>
           </div>

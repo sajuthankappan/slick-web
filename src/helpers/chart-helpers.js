@@ -1,9 +1,9 @@
 export function mapNetworkRequests(data) {
-  let labels = [];
-  let chartData = [];
+  const labels = [];
+  const chartData = [];
   data.details.items.forEach((item, index) => {
     labels.push(index + 1);
-    chartData.push([Math.round(item.startTime), Math.round(item.endTime)])
+    chartData.push([Math.round(item.startTime), Math.round(item.endTime)]);
   });
   return {
     labels,
@@ -11,17 +11,17 @@ export function mapNetworkRequests(data) {
       label: 'Network',
       backgroundColor: 'rgb(255, 99, 132)',
       borderColor: 'rgb(255, 99, 132)',
-      data: chartData
-    }]
+      data: chartData,
+    }],
   };
 }
 
 export function mapTrend(data) {
-  let labels = [];
-  let chartData = [];
+  const labels = [];
+  const chartData = [];
   data.forEach((summary, index) => {
     labels.push(summary.siteRunId);
-    chartData.push(summary.categories.performance.score)
+    chartData.push(summary.categories.performance.score);
   });
   return {
     labels,
@@ -33,6 +33,6 @@ export function mapTrend(data) {
       fill: false,
       pointRadius: 10,
       pointHoverRadius: 15,
-    }]
+    }],
   };
 }

@@ -7,7 +7,7 @@
   let chartCanvas;
   const dispatch = createEventDispatcher();
 
-  let chartData = mapTrend(data);
+  const chartData = mapTrend(data);
 
   onMount(async () => {
     const ctx = chartCanvas.getContext('2d');
@@ -22,6 +22,12 @@
       options: {
         tooltips: {
           mode: 'index',
+          callbacks: {
+            footer: (tooltipItems, tooltipData) => {
+              const currentIndex = tooltipItems[0].index;
+              return data[currentIndex].fetchTime;
+            },
+          },
           footerFontStyle: 'normal',
         },
         scales: {

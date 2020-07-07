@@ -1,22 +1,22 @@
 <script>
-  import { onMount } from "svelte";
-  import { currentUser, siteId, siteRunId, pageId, auditProfileId } from "../stores";
-  import { getSite, getTrend } from "../helpers/data/reports";
-  import Loading from "../components/Loading.svelte";
-  import HttpError from "../components/HttpError.svelte";
-  import IdPickerLevel from "../components/IdPickerLevel.svelte";
+  import { onMount } from 'svelte';
+  import { stores } from '@sapper/app';
+  import { currentUser, siteId, siteRunId, pageId, auditProfileId } from '../stores';
+  import { getSite, getTrend } from '../helpers/data/reports';
+  import Loading from '../components/Loading.svelte';
+  import HttpError from '../components/HttpError.svelte';
+  import IdPickerLevel from '../components/IdPickerLevel.svelte';
   import WebVitals from '../components/WebVitals.svelte';
   import ScoreTrendChart from '../components/ScoreTrendChart.svelte';
 
   let sitePromise;
   let trendPromise;
-  let isMobile = true;
-  let device = 'mobile';
   let lhVersion = '6.0.0';
   let auditSummaries;
   let auditSummary;
-  let pageIndex = 0;
-  let profileIndex = 0;
+
+  const { page } = stores();
+  const { query } = $page;
 
   $: webVitals = auditSummary && auditSummary.webVitals;
   $: score = auditSummary && auditSummary.categories.performance.score;
@@ -44,7 +44,10 @@
   }
 
   onMount(async () => {
-    // promise = retrieve();
+    if (query && query.siteId) {
+      siteId.set(query.siteId);
+      sitePromise = retrieveSite();
+    }
   });
 
   async function handleRetrieveSiteClicked(e) {
@@ -52,24 +55,16 @@
     siteId.set(e.detail.id);
     sitePromise = retrieveSite();
     trendPromise = null;
-    //siteTreadsPromise = retrieveSiteTreads();
   }
 
   async function handleSelectPageClicked(page, i) {
     pageId.set(page.id);
-    pageIndex = i;
     trendPromise = retrieveTrend();
   }
 
   async function handleSelectProfileClicked(profile, i) {
     auditProfileId.set(profile.id);
-    profileIndex = i;
     trendPromise = retrieveTrend();
-  }
-
-  async function handleSelectRunClicked(summary) {
-    siteRunId.set(summary.siteRunId);
-    auditSummary = summary;
   }
 
   async function handleVersionChanged(e) {
@@ -78,7 +73,7 @@
 
   async function handleChartClicked(e) {
     auditSummary = null;
-    let clickedIndex = e.detail.index;
+    const clickedIndex = e.detail.index;
     if (clickedIndex >= 0) {
       auditSummary = auditSummaries[clickedIndex];
       siteRunId.set(auditSummary.siteRunId);
@@ -189,8 +184,29 @@
         </div>
         <div>
           {#if webVitals}
-            <div class="has-text-weight-bold is-italic pb-2">Score: {score} (Lighouse {lhVersion}) / Detailed Report: <a href={`/report/?id=${reportId}`}>{reportId}</a></div>
-            <WebVitals data={webVitals} />
+            <div class="box">
+              <div class="columns">
+                <div class="column">
+                  <div>
+                    Run: {auditSummary.siteRunId}
+                  </div>
+                  <div>
+                    Date: {auditSummary.fetchTime}
+                  </div>
+                </div>
+                <div class="column">
+                  <div>
+                    Score: {score} (Lighouse {lhVersion})
+                  </div>
+                  <div>
+                    Detailed Report: <a href={`/report/?id=${reportId}`}>{reportId}</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <WebVitals data={webVitals} />
+            </div>
           {/if}
         </div>
       {/if}
