@@ -73,23 +73,25 @@
           </div>
         </div>
         <WebVitals data={report.webVitals} />
-        <div class="tabs">
-          <ul>
-            <li class:is-active={currentTab==='general'} on:click={() => {currentTab = 'general'}}><a>General</a></li>
-            <li class:is-active={currentTab==='network'} on:click={() => {currentTab = 'network'}}><a>Network</a></li>
-          </ul>
-        </div>
-        {#if currentTab === 'general'}
-          {#if report.largestContentfulPaintElement}
-            <div class="has-text-weight-bold">Largest Contentful Paint Element</div>
-            <LargestContentfulPaintElement data={report.largestContentfulPaintElement} />
-          {/if}
-        {:else if currentTab === 'network'}
+        {#if report.networkRequests}
+          <div class="tabs">
+            <ul>
+              <li class:is-active={currentTab==='general'} on:click={() => {currentTab = 'general'}}><a>General</a></li>
+              <li class:is-active={currentTab==='network'} on:click={() => {currentTab = 'network'}}><a>Network</a></li>
+            </ul>
+          </div>
           {#if report.networkRequests}
-            <div class="has-text-weight-bold">Network Chart</div>
-            <NetworkRequestsChart data={report.networkRequests} />
-            <div class="has-text-weight-bold">Network Requests</div>
-            <NetworkRequests data={report.networkRequests} />
+            {#if currentTab === 'general'}
+              {#if report.largestContentfulPaintElement}
+                <div class="has-text-weight-bold">Largest Contentful Paint Element</div>
+                <LargestContentfulPaintElement data={report.largestContentfulPaintElement} />
+              {/if}
+            {:else if currentTab === 'network'}
+              <div class="has-text-weight-bold">Network Chart</div>
+              <NetworkRequestsChart data={report.networkRequests} />
+              <div class="has-text-weight-bold">Network Requests</div>
+              <NetworkRequests data={report.networkRequests} />
+            {/if}
           {/if}
         {/if}
       {/if}

@@ -22,29 +22,27 @@
       options: {
         tooltips: {
           mode: 'index',
-          callbacks: {
-            footer: function(tooltipItems, tooltipData) {
-              let currentIndex = tooltipItems[0].index;
-              //return data.details.items[currentIndex].url;
-              return null;
-            }
-          },
-          footerFontStyle: 'normal'
+          footerFontStyle: 'normal',
         },
         scales: {
-          yAxes : [{
-            ticks : {
-              max : 1,    
-              min : 0
-            }
-          }]
+          yAxes: [{
+            ticks: {
+              max: 1,
+              min: 0,
+            },
+          }],
+        },
+        elements: {
+          point: {
+            pointStyle: 'crossRot',
+          },
         },
         onClick: (e, items) => {
           if (items.length > 0) {
             dispatch('chartclick', { index: items[0]._index });
           }
-        }
-      }
+        },
+      },
     });
   });
 </script>

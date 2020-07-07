@@ -51,6 +51,7 @@
     e.preventDefault();
     siteId.set(e.detail.id);
     sitePromise = retrieveSite();
+    trendPromise = null;
     //siteTreadsPromise = retrieveSiteTreads();
   }
 
@@ -188,7 +189,7 @@
         </div>
         <div>
           {#if webVitals}
-            <div class="has-text-weight-bold is-italic pb-2">Score: {score} (Lighouse {lhVersion}) / Report ID: {reportId}</div>
+            <div class="has-text-weight-bold is-italic pb-2">Score: {score} (Lighouse {lhVersion}) / Detailed Report: <a href={`/report/?id=${reportId}`}>{reportId}</a></div>
             <WebVitals data={webVitals} />
           {/if}
         </div>

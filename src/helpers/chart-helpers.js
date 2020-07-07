@@ -30,7 +30,9 @@ export function mapTrend(data) {
       backgroundColor: 'rgb(255, 99, 132)',
       borderColor: 'rgb(255, 99, 132)',
       data: chartData,
-      fill: false
+      fill: false,
+      pointRadius: 10,
+      pointHoverRadius: 15,
     }]
   };
 }
