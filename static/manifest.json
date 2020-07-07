@@ -1,6 +1,6 @@
 {
-	"background_color": "teal",
-	"theme_color": "#098139",
+	"background_color": "#eee",
+	"theme_color": "teal",
 	"name": "Slick",
 	"short_name": "Slick",
 	"display": "standalone",
