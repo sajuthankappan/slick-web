@@ -6,12 +6,14 @@
   import HttpError from "../components/HttpError.svelte";
   import IdPickerLevel from "../components/IdPickerLevel.svelte";
   import WebVitals from '../components/WebVitals.svelte';
+  import ScoreTrendChart from '../components/ScoreTrendChart.svelte';
 
   let sitePromise;
   let trendPromise;
   let isMobile = true;
   let device = 'mobile';
   let lhVersion = '6.0.0';
+  let auditSummaries;
   let auditSummary;
   let pageIndex = 0;
   let profileIndex = 0;
@@ -22,6 +24,8 @@
 
   async function retrieveSite() {
     auditSummary = null;
+    auditSummaries = null;
+
     const idToken = await $currentUser.getIdToken();
     const site = await getSite($siteId, idToken);
     if (site && site.pages && site.pages.length > 0) {
@@ -35,6 +39,7 @@
     auditSummary = null;
     const idToken = await $currentUser.getIdToken();
     const trend = await getTrend($siteId, $pageId, $auditProfileId, idToken);
+    auditSummaries = trend;
     return trend;
   }
 
@@ -68,6 +73,15 @@
 
   async function handleVersionChanged(e) {
     lhVersion = e.detail.lhVersion;
+  }
+
+  async function handleChartClicked(e) {
+    auditSummary = null;
+    let clickedIndex = e.detail.index;
+    if (clickedIndex >= 0) {
+      auditSummary = auditSummaries[clickedIndex];
+      siteRunId.set(auditSummary.siteRunId);
+    }
   }
 </script>
 
@@ -169,44 +183,14 @@
       <Loading />
     {:then summaries}
       {#if summaries}
-        <div class="columns">
-          <div class="column is-one-third">
-            <table class="table">
-              <caption>Runs</caption>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {#each summaries as summary}
-                  <tr>
-                    <td>
-                      {summary.siteRunId}
-                    </td>
-                    <td>
-                      <div class="buttons">
-                        <button
-                          class="button is-small"
-                          on:click={() => {
-                            handleSelectRunClicked(summary);
-                          }}>
-                          &gt;
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                {/each}
-              </tbody>
-            </table>
-          </div>
-          <div class="column">
-            {#if webVitals}
-              <div class="has-text-weight-bold is-italic pb-2">Score: {score} (Lighouse {lhVersion}) / Report ID: {reportId}</div>
-              <WebVitals data={webVitals} />
-            {/if}
-          </div>
+        <div>
+          <ScoreTrendChart data={summaries} on:chartclick={handleChartClicked} />
+        </div>
+        <div>
+          {#if webVitals}
+            <div class="has-text-weight-bold is-italic pb-2">Score: {score} (Lighouse {lhVersion}) / Report ID: {reportId}</div>
+            <WebVitals data={webVitals} />
+          {/if}
         </div>
       {/if}
     {:catch error}
