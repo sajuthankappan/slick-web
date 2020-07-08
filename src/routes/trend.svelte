@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import { stores } from '@sapper/app';
-  import { currentUser, siteId, siteRunId, pageId, auditProfileId } from '../stores';
+  import { currentUser } from '../stores';
   import { getSite, getTrend } from '../helpers/data/reports';
   import Loading from '../components/Loading.svelte';
   import HttpError from '../components/HttpError.svelte';
@@ -11,9 +11,11 @@
 
   let sitePromise;
   let trendPromise;
-  let lhVersion = '6.0.0';
   let auditSummaries;
   let auditSummary;
+  let siteId;
+  let pageId;
+  let auditProfile;
 
   const { page } = stores();
   const { query } = $page;
@@ -27,10 +29,10 @@
     auditSummaries = null;
 
     const idToken = await $currentUser.getIdToken();
-    const site = await getSite($siteId, idToken);
+    const site = await getSite(siteId, idToken);
     if (site && site.pages && site.pages.length > 0) {
-      pageId.set(site.pages[0].id);
-      auditProfileId.set(site.auditProfiles[0].id);
+      pageId = site.pages[0].id;
+      auditProfile = site.auditProfiles[0];
     }
     return site;
   }
@@ -38,37 +40,33 @@
   async function retrieveTrend() {
     auditSummary = null;
     const idToken = await $currentUser.getIdToken();
-    const trend = await getTrend($siteId, $pageId, $auditProfileId, idToken);
+    const trend = await getTrend(siteId, pageId, auditProfile.id, idToken);
     auditSummaries = trend;
     return trend;
   }
 
   onMount(async () => {
     if (query && query.siteId) {
-      siteId.set(query.siteId);
+      siteId = query.siteId;
       sitePromise = retrieveSite();
     }
   });
 
   async function handleRetrieveSiteClicked(e) {
     e.preventDefault();
-    siteId.set(e.detail.id);
+    siteId = e.detail.id;
     sitePromise = retrieveSite();
     trendPromise = null;
   }
 
   async function handleSelectPageClicked(page, i) {
-    pageId.set(page.id);
+    pageId = page.id;
     trendPromise = retrieveTrend();
   }
 
   async function handleSelectProfileClicked(profile, i) {
-    auditProfileId.set(profile.id);
+    auditProfile = profile;
     trendPromise = retrieveTrend();
-  }
-
-  async function handleVersionChanged(e) {
-    lhVersion = e.detail.lhVersion;
   }
 
   async function handleChartClicked(e) {
@@ -76,7 +74,7 @@
     const clickedIndex = e.detail.index;
     if (clickedIndex >= 0) {
       auditSummary = auditSummaries[clickedIndex];
-      siteRunId.set(auditSummary.siteRunId);
+      siteRunId = auditSummary.siteRunId;
     }
   }
 </script>
@@ -93,10 +91,9 @@
   <section class="section">
     <IdPickerLevel
       label="Site ID"
-      id={$siteId}
+      id={siteId}
       showVersion={false}
       on:retrieve={handleRetrieveSiteClicked}
-      on:versionChange={handleVersionChanged}
     />
 
     {#await sitePromise}
@@ -136,7 +133,7 @@
                 {/each}
               </tbody>
             </table>
-            <div>Selected Page: {$pageId}</div>
+            <div>Selected Page: {pageId}</div>
           </div>
           <div class="column">
             <table class="table">
@@ -168,7 +165,7 @@
                 {/each}
               </tbody>
             </table>
-            <div>Selected Profile: {$auditProfileId}</div>
+            <div>Selected Profile: {auditProfile.id}</div>
           </div>
         </div>
       {/if}
@@ -196,7 +193,7 @@
                 </div>
                 <div class="column">
                   <div>
-                    Score: {score} (Lighouse {lhVersion})
+                    Score: {score} (Lighouse {auditProfile.lighthouseVersion})
                   </div>
                   <div>
                     Report: <a href={`/report/?id=${reportId}`}>{reportId}</a>
