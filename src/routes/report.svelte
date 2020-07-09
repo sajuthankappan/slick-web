@@ -11,6 +11,7 @@
   import LargestContentfulPaintElement from '../components/largestContentfulPaintElement.svelte';
   import NetworkRequests from '../components/NetworkRequests.svelte';
   import NetworkRequestsChart from '../components/NetworkRequestsChart.svelte';
+  import ThirdPartySummary from '../components/ThirdPartySummary.svelte';
 
   let reportId;
   let promise;
@@ -75,8 +76,9 @@
         {#if report.networkRequests}
           <div class="tabs">
             <ul>
-              <li class:is-active={currentTab==='general'} on:click={() => {currentTab = 'general'}}><a>General</a></li>
-              <li class:is-active={currentTab==='network'} on:click={() => {currentTab = 'network'}}><a>Network</a></li>
+              <li class:is-active={currentTab === 'general'} on:click={() => { currentTab = 'general'; }}><a>General</a></li>
+              <li class:is-active={currentTab === 'network'} on:click={() => { currentTab = 'network'; }}><a>Network</a></li>
+              <li class:is-active={currentTab === 'thumbnails'} on:click={() => { currentTab = 'thumbnails'; }}><a>Thumbnails</a></li>
             </ul>
           </div>
           {#if report.networkRequests}
@@ -85,11 +87,22 @@
                 <div class="has-text-weight-bold">Largest Contentful Paint Element</div>
                 <LargestContentfulPaintElement data={report.largestContentfulPaintElement} />
               {/if}
+              {#if report.thirdPartySummary}
+                <div class="has-text-weight-bold">Third Party Summary</div>
+                <div>{report.thirdPartySummary.displayValue}</div>
+                <ThirdPartySummary data={report.thirdPartySummary} />
+              {/if}
             {:else if currentTab === 'network'}
               <div class="has-text-weight-bold">Network Chart</div>
               <NetworkRequestsChart data={report.networkRequests} />
               <div class="has-text-weight-bold">Network Requests</div>
               <NetworkRequests data={report.networkRequests} />
+            {:else if currentTab === 'thumbnails'}
+              {#if report.screenshotThumbnails}
+                {#each report.screenshotThumbnails.details.items as item}
+                  <img class="px-1" src={item.data} alt="filmstrip thumbnail"/>
+                {/each}
+              {/if}
             {/if}
           {/if}
         {/if}

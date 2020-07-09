@@ -74,7 +74,6 @@
     const clickedIndex = e.detail.index;
     if (clickedIndex >= 0) {
       auditSummary = auditSummaries[clickedIndex];
-      siteRunId = auditSummary.siteRunId;
     }
   }
 </script>
