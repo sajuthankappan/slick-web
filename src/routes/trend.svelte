@@ -59,8 +59,8 @@
     trendPromise = null;
   }
 
-  async function handleSelectPageClicked(page, i) {
-    pageId = page.id;
+  async function handleSelectPageClicked(selectedPage, i) {
+    pageId = selectedPage.id;
     trendPromise = retrieveTrend();
   }
 
@@ -112,7 +112,7 @@
               </thead>
               <tbody>
                 {#each site.pages as page, i}
-                  <tr>
+                  <tr class:has-background-grey-light={page.id === pageId}>
                     <th>{page.name}</th>
                     <td>
                       <a href={page.url}>{page.url}</a>
@@ -132,7 +132,6 @@
                 {/each}
               </tbody>
             </table>
-            <div>Selected Page: {pageId}</div>
           </div>
           <div class="column">
             <table class="table">
@@ -146,7 +145,7 @@
               </thead>
               <tbody>
                 {#each site.auditProfiles as profile, i}
-                  <tr>
+                  <tr class:has-background-grey-light={profile.id === auditProfile.id}>
                     <th>{profile.id}</th>
                     <td>{profile.name}</td>
                     <td>
@@ -164,7 +163,6 @@
                 {/each}
               </tbody>
             </table>
-            <div>Selected Profile: {auditProfile.id}</div>
           </div>
         </div>
       {/if}

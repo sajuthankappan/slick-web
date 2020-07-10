@@ -78,26 +78,35 @@
             <ul>
               <li class:is-active={currentTab === 'general'} on:click={() => { currentTab = 'general'; }}><a>General</a></li>
               <li class:is-active={currentTab === 'network'} on:click={() => { currentTab = 'network'; }}><a>Network</a></li>
-              <li class:is-active={currentTab === 'thumbnails'} on:click={() => { currentTab = 'thumbnails'; }}><a>Thumbnails</a></li>
+              <li class:is-active={currentTab === 'others'} on:click={() => { currentTab = 'others'; }}><a>Others</a></li>
             </ul>
           </div>
           {#if report.networkRequests}
             {#if currentTab === 'general'}
+              {#if report.screenshotThumbnails}
+                {#each report.screenshotThumbnails.details.items as item}
+                  <img class="px-1" src={item.data} alt="filmstrip thumbnail"/>
+                {/each}
+              {/if}
               {#if report.largestContentfulPaintElement}
-                <div class="has-text-weight-bold">Largest Contentful Paint Element</div>
-                <LargestContentfulPaintElement data={report.largestContentfulPaintElement} />
+                <section class="section">
+                  <h2 class="title is-5">Largest Contentful Paint Element</h2>
+                  <LargestContentfulPaintElement data={report.largestContentfulPaintElement} />
+                </section>
               {/if}
               {#if report.thirdPartySummary}
-                <div class="has-text-weight-bold">Third Party Summary</div>
-                <div>{report.thirdPartySummary.displayValue}</div>
-                <ThirdPartySummary data={report.thirdPartySummary} />
+                <div class="section">
+                  <h2 class="title is-5">Third Party Summary</h2>
+                  <div>{report.thirdPartySummary.displayValue}</div>
+                  <ThirdPartySummary data={report.thirdPartySummary} />
+                </div>
               {/if}
             {:else if currentTab === 'network'}
               <div class="has-text-weight-bold">Network Chart</div>
               <NetworkRequestsChart data={report.networkRequests} />
               <div class="has-text-weight-bold">Network Requests</div>
               <NetworkRequests data={report.networkRequests} />
-            {:else if currentTab === 'thumbnails'}
+            {:else if currentTab === 'others'}
               {#if report.screenshotThumbnails}
                 {#each report.screenshotThumbnails.details.items as item}
                   <img class="px-1" src={item.data} alt="filmstrip thumbnail"/>
