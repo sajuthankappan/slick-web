@@ -1,17 +1,22 @@
 export function mapNetworkRequests(data) {
+  const { networkRequests } = data;
   const labels = [];
-  const chartData = [];
-  data.details.items.forEach((item, index) => {
-    labels.push(index + 1);
-    chartData.push([Math.round(item.startTime), Math.round(item.endTime)]);
+  const networkData = [];
+  let count = 0;
+
+  networkRequests.details.items.forEach((item) => {
+    count += 1;
+    labels.push(count);
+    networkData.push([Math.round(item.startTime), Math.round(item.endTime)]);
   });
+
   return {
     labels,
     datasets: [{
       label: 'Network',
       backgroundColor: 'rgb(255, 99, 132)',
       borderColor: 'rgb(255, 99, 132)',
-      data: chartData,
+      data: networkData,
     }],
   };
 }
@@ -19,7 +24,7 @@ export function mapNetworkRequests(data) {
 export function mapTrend(data) {
   const labels = [];
   const chartData = [];
-  data.forEach((summary, index) => {
+  data.forEach((summary) => {
     labels.push(summary.siteRunId);
     chartData.push(summary.categories.performance.score);
   });

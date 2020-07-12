@@ -24,7 +24,7 @@
           callbacks: {
             footer: (tooltipItems, tooltipData) => {
               const currentIndex = tooltipItems[0].index;
-              return data.details.items[currentIndex].url;
+              return data.networkRequests.details.items[currentIndex].url;
             },
           },
           footerFontStyle: 'normal',

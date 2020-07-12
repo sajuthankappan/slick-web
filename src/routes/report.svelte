@@ -1,6 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import { stores } from '@sapper/app';
+  import marked from 'marked';
   import { currentUser } from '../stores';
   import { getReport } from '../helpers/data/reports';
   import { getLighthouseCalculatorUrl } from '../helpers/lighthouse/calc';
@@ -8,7 +9,10 @@
   import HttpError from '../components/HttpError.svelte';
   import IdPickerLevel from '../components/IdPickerLevel.svelte';
   import WebVitals from '../components/WebVitals.svelte';
-  import LargestContentfulPaintElement from '../components/largestContentfulPaintElement.svelte';
+  import LargestContentfulPaintElement from '../components/LargestContentfulPaintElement.svelte';
+  import AuditTable from '../components/AuditTable.svelte';
+  import PreconnectWarnings from '../components/PreconnectWarnings.svelte';
+  import AuditOpportunity from '../components/AuditOpportunity.svelte';
   import NetworkRequests from '../components/NetworkRequests.svelte';
   import NetworkRequestsChart from '../components/NetworkRequestsChart.svelte';
   import ThirdPartySummary from '../components/ThirdPartySummary.svelte';
@@ -77,41 +81,105 @@
           <div class="tabs">
             <ul>
               <li class:is-active={currentTab === 'general'} on:click={() => { currentTab = 'general'; }}><a>General</a></li>
+              <li class:is-active={currentTab === 'requests'} on:click={() => { currentTab = 'requests'; }}><a>Requests</a></li>
               <li class:is-active={currentTab === 'network'} on:click={() => { currentTab = 'network'; }}><a>Network</a></li>
-              <li class:is-active={currentTab === 'others'} on:click={() => { currentTab = 'others'; }}><a>Others</a></li>
+              <li class:is-active={currentTab === 'images'} on:click={() => { currentTab = 'images'; }}><a>Images</a></li>
+              <li class:is-active={currentTab === 'scripts'} on:click={() => { currentTab = 'scripts'; }}><a>Scripts</a></li>
             </ul>
           </div>
-          {#if report.networkRequests}
-            {#if currentTab === 'general'}
-              {#if report.screenshotThumbnails}
-                {#each report.screenshotThumbnails.details.items as item}
-                  <img class="px-1" src={item.data} alt="filmstrip thumbnail"/>
-                {/each}
-              {/if}
-              {#if report.largestContentfulPaintElement}
-                <section class="section">
-                  <h2 class="title is-5">Largest Contentful Paint Element</h2>
-                  <LargestContentfulPaintElement data={report.largestContentfulPaintElement} />
-                </section>
-              {/if}
-              {#if report.thirdPartySummary}
-                <div class="section">
-                  <h2 class="title is-5">Third Party Summary</h2>
-                  <div>{report.thirdPartySummary.displayValue}</div>
-                  <ThirdPartySummary data={report.thirdPartySummary} />
-                </div>
-              {/if}
-            {:else if currentTab === 'network'}
-              <div class="has-text-weight-bold">Network Chart</div>
-              <NetworkRequestsChart data={report.networkRequests} />
-              <div class="has-text-weight-bold">Network Requests</div>
+          {#if currentTab === 'general'}
+            {#if report.screenshotThumbnails}
+              {#each report.screenshotThumbnails.details.items as item}
+                <img class="px-1" src={item.data} alt="filmstrip thumbnail"/>
+              {/each}
+            {/if}
+            {#if report.largestContentfulPaintElement}
+              <section class="section">
+                <h2 class="title is-5">Largest Contentful Paint Element</h2>
+                <LargestContentfulPaintElement data={report.largestContentfulPaintElement} />
+              </section>
+            {/if}
+            {#if report.thirdPartySummary}
+              <div class="section">
+                <h2 class="title is-5">Third Party Summary</h2>
+                <div>{report.thirdPartySummary.displayValue}</div>
+                <ThirdPartySummary data={report.thirdPartySummary} />
+              </div>
+            {/if}
+            {#if report.resourceSummary}
+              <section class="section">
+                <h2 class="title is-5">Resoure Summary</h2>
+                <div class="content is-size-7">{report.resourceSummary.title}</div>
+                <AuditTable data={report.resourceSummary.details} />
+              </section>
+            {/if}
+          {:else if currentTab === 'requests'}
+            {#if report.networkRequests}
+              <h2 class="title is-5">Chart</h2>
+              <NetworkRequestsChart data={{networkRequests: report.networkRequests, mainThreadTasks: report.mainThreadTasks}} />
+              <h2 class="title is-5">Network Requests</h2>
               <NetworkRequests data={report.networkRequests} />
-            {:else if currentTab === 'others'}
-              {#if report.screenshotThumbnails}
-                {#each report.screenshotThumbnails.details.items as item}
-                  <img class="px-1" src={item.data} alt="filmstrip thumbnail"/>
-                {/each}
-              {/if}
+            {/if}
+          {:else if currentTab === 'network'}
+            {#if report.usesHttp2}
+              <section class="section">
+                <h2 class="title is-5">{report.usesHttp2.title}</h2>
+                <AuditTable data={report.usesHttp2.details} />
+              </section>
+            {/if}
+            {#if report.usesRelPreconnect}
+              <section class="section">
+                <h2 class="title is-5">{report.usesRelPreconnect.title}</h2>
+                <PreconnectWarnings data={report.usesRelPreconnect.warnings} />
+              </section>
+            {/if}
+          {:else if currentTab === 'images'}
+            {#if report.usesResponsiveImages && report.usesResponsiveImages.details}
+              <section class="section">
+                <h2 class="title is-5">{report.usesResponsiveImages.title}</h2>
+                <div class="content is-size-7">{@html marked(report.usesResponsiveImages.description)}</div>
+                <AuditOpportunity data={report.usesResponsiveImages.details} />
+              </section>
+            {/if}
+            {#if report.usesOptimizedImages && report.usesOptimizedImages.details}
+              <section class="section">
+                <h2 class="title is-5">{report.usesOptimizedImages.title}</h2>
+                <div class="content is-size-7">{@html marked(report.usesOptimizedImages.description)}</div>
+                <AuditOpportunity data={report.usesOptimizedImages.details} />
+              </section>
+            {/if}
+            {#if report.usesWebpImages && report.usesWebpImages.details}
+              <section class="section">
+                <h2 class="title is-5">{report.usesWebpImages.title}</h2>
+                <div class="content is-size-7">{@html marked(report.usesWebpImages.description)}</div>
+                <AuditOpportunity data={report.usesWebpImages.details} />
+              </section>
+            {/if}
+            {#if report.offscreenImages && report.offscreenImages.details}
+              <section class="section">
+                <h2 class="title is-5">{report.offscreenImages.title}</h2>
+                <div class="content is-size-7">{@html marked(report.offscreenImages.description)}</div>
+                <AuditOpportunity data={report.offscreenImages.details} />
+              </section>
+            {/if}
+          {:else if currentTab === 'scripts'}
+            {#if report.mainThreadWorkBreakdown && report.mainThreadWorkBreakdown.details}
+              <section class="section">
+                <div class="has-text-weight-bold">Main Thread Tasks</div>
+                <AuditTable data={report.mainThreadWorkBreakdown.details} />
+              </section>
+            {/if}
+            {#if report.bootupTime && report.bootupTime.details}
+              <section class="section">
+                <div class="has-text-weight-bold">{report.bootupTime.title}</div>
+                <AuditTable data={report.bootupTime.details} />
+              </section>
+            {/if}
+            {#if report.mainThreadTasks && report.mainThreadTasks.details}
+              <section class="section">
+                <div class="has-text-weight-bold">{report.mainThreadWorkBreakdown.title}</div>
+                <AuditTable data={report.mainThreadTasks.details} />
+              </section>
             {/if}
           {/if}
         {/if}

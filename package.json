@@ -19,6 +19,7 @@
     "dotenv": "^8.2.0",
     "firebase": "^7.15.5",
     "firebaseui": "^4.5.1",
+    "marked": "^1.1.0",
     "moment": "^2.27.0",
     "nprogress": "^0.2.0",
     "polka": "next",
