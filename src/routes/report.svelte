@@ -85,6 +85,7 @@
               <li class:is-active={currentTab === 'network'} on:click={() => { currentTab = 'network'; }}><a>Network</a></li>
               <li class:is-active={currentTab === 'images'} on:click={() => { currentTab = 'images'; }}><a>Images</a></li>
               <li class:is-active={currentTab === 'scripts'} on:click={() => { currentTab = 'scripts'; }}><a>Scripts</a></li>
+              <li class:is-active={currentTab === 'styles'} on:click={() => { currentTab = 'styles'; }}><a>Styles</a></li>
             </ul>
           </div>
           {#if currentTab === 'general'}
@@ -165,20 +166,49 @@
           {:else if currentTab === 'scripts'}
             {#if report.mainThreadWorkBreakdown && report.mainThreadWorkBreakdown.details}
               <section class="section">
-                <div class="has-text-weight-bold">Main Thread Tasks</div>
+                <h2 class="title is-5">Main Thread Tasks</h2>
                 <AuditTable data={report.mainThreadWorkBreakdown.details} />
               </section>
             {/if}
             {#if report.bootupTime && report.bootupTime.details}
               <section class="section">
-                <div class="has-text-weight-bold">{report.bootupTime.title}</div>
+                <h2 class="title is-5">{report.bootupTime.title}</h2>
                 <AuditTable data={report.bootupTime.details} />
+              </section>
+            {/if}
+            {#if report.unminifiedJavascript && report.unminifiedJavascript.details}
+              <section class="section">
+                <h2 class="title is-5">{report.unminifiedJavascript.title}</h2>
+                <div class="content is-size-7">{@html marked(report.unminifiedJavascript.description)}</div>
+                <AuditOpportunity data={report.unminifiedJavascript.details} />
+              </section>
+            {/if}
+            {#if report.unusedJavascript && report.unusedJavascript.details}
+              <section class="section">
+                <h2 class="title is-5">{report.unusedJavascript.title}</h2>
+                <div class="content is-size-7">{@html marked(report.unusedJavascript.description)}</div>
+                <AuditOpportunity data={report.unusedJavascript.details} />
               </section>
             {/if}
             {#if report.mainThreadTasks && report.mainThreadTasks.details}
               <section class="section">
-                <div class="has-text-weight-bold">{report.mainThreadWorkBreakdown.title}</div>
+                <h2 class="title is-5">{report.mainThreadWorkBreakdown.title}</h2>
                 <AuditTable data={report.mainThreadTasks.details} />
+              </section>
+            {/if}
+          {:else if currentTab === 'styles'}
+            {#if report.unminifiedCss && report.unminifiedCss.details}
+              <section class="section">
+                <h2 class="title is-5">{report.unminifiedCss.title}</h2>
+                <div class="content is-size-7">{@html marked(report.unminifiedCss.description)}</div>
+                <AuditOpportunity data={report.unminifiedCss.details} />
+              </section>
+            {/if}
+            {#if report.unusedCssRules && report.unusedCssRules.details}
+              <section class="section">
+                <h2 class="title is-5">{report.unusedCssRules.title}</h2>
+                <div class="content is-size-7">{@html marked(report.unusedCssRules.description)}</div>
+                <AuditOpportunity data={report.unusedCssRules.details} />
               </section>
             {/if}
           {/if}
