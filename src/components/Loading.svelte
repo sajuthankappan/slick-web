@@ -8,5 +8,3 @@
   
   onDestroy(() => NProgress.done());
 </script>
-
-<div>Loading..</div>
