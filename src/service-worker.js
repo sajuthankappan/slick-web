@@ -87,7 +87,7 @@ self.addEventListener('fetch', (event) => {
 
           if (event.request.method === 'GET') {
             if (urlObject.hostname.includes('saju.workers.dev')) {
-              if (urlObject.pathname !== '/api/strava-account/status') {
+              if (!urlObject.pathname.startsWith('/api/slick/trend')) {
                 console.log('adding to offlineApiResponses ', urlObject.pathname);
                 offlineApiResponses.add(urlObject.pathname);
               }
