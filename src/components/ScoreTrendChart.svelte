@@ -1,4 +1,5 @@
 <script>
+  import moment from 'moment';
   import Chart from 'chart.js';
   import { createEventDispatcher, onMount } from 'svelte';
   import { mapTrend } from '../helpers/chart-helpers.js';
@@ -25,7 +26,7 @@
           callbacks: {
             footer: (tooltipItems, tooltipData) => {
               const currentIndex = tooltipItems[0].index;
-              return data[currentIndex].fetchTime;
+              return moment(data[currentIndex].fetchTime).calendar();
             },
           },
           footerFontStyle: 'normal',
