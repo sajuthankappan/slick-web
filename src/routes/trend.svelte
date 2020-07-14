@@ -1,4 +1,5 @@
 <script>
+  import moment from 'moment';
   import { onMount } from 'svelte';
   import { stores } from '@sapper/app';
   import { currentUser } from '../stores';
@@ -185,7 +186,7 @@
                     Run: {auditSummary.siteRunId}
                   </div>
                   <div>
-                    Date: {auditSummary.fetchTime}
+                    Date: {moment(auditSummary.fetchTime).calendar()}
                   </div>
                 </div>
                 <div class="column">

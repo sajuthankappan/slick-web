@@ -1,4 +1,5 @@
 <script>
+  import moment from 'moment';
   import { onMount } from 'svelte';
   import { stores } from '@sapper/app';
   import marked from 'marked';
@@ -70,7 +71,7 @@
       {#if report}
         <div class="box has-text-centered">
           <div><a href={report.requestedUrl}>{report.requestedUrl}</a></div>
-          <div>Report Time: {report.fetchTime}</div>
+          <div>Date: {moment(report.fetchTime).calendar()}</div>
           <label class="label">Score (Lighthouse {report.lighthouseVersion} {report.configSettings.emulatedFormFactor}) </label>
           <div class="control has-text-centered">
             <a href={getLighthouseCalculatorUrl(report)}>{report.categories.performance.score}</a>
