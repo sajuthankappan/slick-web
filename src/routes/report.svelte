@@ -72,10 +72,8 @@
         <div class="box has-text-centered">
           <div><a href={report.requestedUrl}>{report.requestedUrl}</a></div>
           <div>Date: {moment(report.fetchTime).calendar()}</div>
-          <label class="label">Score (Lighthouse {report.lighthouseVersion} {report.configSettings.emulatedFormFactor}) </label>
-          <div class="control has-text-centered">
-            <a href={getLighthouseCalculatorUrl(report)}>{report.categories.performance.score}</a>
-          </div>
+          <div>Score: {report.categories.performance.score} (Lighthouse {report.lighthouseVersion} {report.configSettings.emulatedFormFactor})</div>
+          <div><a href={getLighthouseCalculatorUrl(report)}>Lighthouse Scoring Calculator</a></div>
         </div>
         <WebVitals data={report.webVitals} />
         {#if report.networkRequests}
