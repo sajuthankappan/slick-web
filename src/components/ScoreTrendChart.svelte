@@ -34,7 +34,7 @@
         scales: {
           yAxes: [{
             ticks: {
-              max: 1,
+              max: 100,
               min: 0,
             },
           }],

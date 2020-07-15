@@ -26,7 +26,7 @@ export function mapTrend(data) {
   const chartData = [];
   data.forEach((summary) => {
     labels.push(summary.siteRunId);
-    chartData.push(summary.categories.performance.score);
+    chartData.push(summary.categories.performance.score * 100);
   });
   return {
     labels,
