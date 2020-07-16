@@ -99,6 +99,13 @@
                 <LargestContentfulPaintElement data={report.largestContentfulPaintElement} />
               </section>
             {/if}
+            {#if report.renderBlockingResources && report.renderBlockingResources.details}
+              <section class="section">
+                <h2 class="title is-5">{report.renderBlockingResources.title}</h2>
+                <div class="content is-size-7">{@html marked(report.renderBlockingResources.description)}</div>
+                <AuditOpportunity data={report.renderBlockingResources.details} />
+              </section>
+            {/if}
             {#if report.thirdPartySummary}
               <div class="section">
                 <h2 class="title is-5">Third Party Summary</h2>
@@ -125,6 +132,12 @@
               <section class="section">
                 <h2 class="title is-5">{report.usesHttp2.title}</h2>
                 <AuditTable data={report.usesHttp2.details} />
+              </section>
+            {/if}
+            {#if report.usesLongCacheTtl}
+              <section class="section">
+                <h2 class="title is-5">{report.usesLongCacheTtl.title}</h2>
+                <AuditTable data={report.usesLongCacheTtl.details} />
               </section>
             {/if}
             {#if report.usesRelPreconnect}
