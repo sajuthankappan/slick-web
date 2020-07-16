@@ -22,7 +22,7 @@
   const { query } = $page;
 
   $: webVitals = auditSummary && auditSummary.webVitals;
-  $: score = auditSummary && auditSummary.categories.performance.score * 100;
+  $: score = auditSummary && Math.round(auditSummary.categories.performance.score * 100);
   $: reportId = auditSummary && auditSummary.auditDetailId.$oid;
 
   async function retrieveSite() {
