@@ -72,7 +72,7 @@
         <div class="box has-text-centered">
           <div><a href={report.requestedUrl}>{report.requestedUrl}</a></div>
           <div>Date: {moment(report.fetchTime).calendar()}</div>
-          <div>Score: {report.categories.performance.score} (Lighthouse {report.lighthouseVersion} {report.configSettings.emulatedFormFactor})</div>
+          <div>Score: {report.categories.performance.score * 100} (Lighthouse {report.lighthouseVersion} {report.configSettings.emulatedFormFactor})</div>
           <div><a href={getLighthouseCalculatorUrl(report)}>Lighthouse Scoring Calculator</a></div>
         </div>
         <WebVitals data={report.webVitals} />
