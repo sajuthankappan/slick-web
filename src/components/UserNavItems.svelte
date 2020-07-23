@@ -1,5 +1,12 @@
 <script>export let segment;</script>
 
+
+<a
+  class="navbar-item"
+  class:has-text-weight-bold={segment === 'sites'}
+  href="/sites">
+  Sites
+</a>
 <a
   class="navbar-item"
   class:has-text-weight-bold={segment === 'trend'}

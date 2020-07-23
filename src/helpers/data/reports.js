@@ -18,6 +18,12 @@ export async function getSite(siteId, idToken) {
   return report;
 }
 
+export async function getGroup(groupId, idToken) {
+  const url = `/groups/${groupId}`;
+  const report = await sfetch.get(url, idToken);
+  return report;
+}
+
 export async function getTrend(siteId, pageId, auditProfileId, idToken) {
   const url = `/trend/${siteId}/${pageId}/${auditProfileId}`;
   const report = await sfetch.get(url, idToken);
