@@ -18,8 +18,8 @@ export async function getSite(siteId, idToken) {
   return report;
 }
 
-export async function getGroup(groupId, idToken) {
-  const url = `/groups/${groupId}`;
+export async function getGroupSites(groupId, idToken) {
+  const url = `/group-sites/${groupId}`;
   const report = await sfetch.get(url, idToken);
   return report;
 }

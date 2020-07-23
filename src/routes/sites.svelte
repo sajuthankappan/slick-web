@@ -2,35 +2,35 @@
   import { onMount } from 'svelte';
   import { stores } from '@sapper/app';
   import { currentUser } from '../stores';
-  import { getGroup } from '../helpers/data/reports';
+  import { getGroupSites } from '../helpers/data/reports';
   import Loading from '../components/Loading.svelte';
   import HttpError from '../components/HttpError.svelte';
   import IdPickerLevel from '../components/IdPickerLevel.svelte';
 
-  let groupPromise;
+  let groupSitesPromise;
   let groupId;
 
   const { page } = stores();
   const { query } = $page;
 
 
-  async function retrieveGroup() {
+  async function retrieveGroupSites() {
     const idToken = await $currentUser.getIdToken();
-    const group = await getGroup(groupId, idToken);
+    const group = await getGroupSites(groupId, idToken);
     return group;
   }
 
   onMount(async () => {
     if (query && query.groupId) {
       groupId = query.groupId;
-      groupPromise = retrieveGroup();
+      groupSitesPromise = retrieveGroupSites();
     }
   });
 
   async function handleRetrieveGroupClicked(e) {
     e.preventDefault();
     groupId = e.detail.id;
-    groupPromise = retrieveGroup();
+    groupSitesPromise = retrieveGroupSites();
   }
 </script>
 
@@ -51,10 +51,10 @@
       on:retrieve={handleRetrieveGroupClicked}
     />
 
-    {#await groupPromise}
+    {#await groupSitesPromise}
       <Loading />
-    {:then group}
-      {#if group}
+    {:then groupSites}
+      {#if groupSites}
         <div class="columns">
           <div class="column">
             <table class="table">
@@ -66,11 +66,11 @@
                 </tr>
               </thead>
               <tbody>
-                {#each group.sites as site, i}
+                {#each groupSites as groupSite, i}
                   <tr>
-                    <th>{site._id.$oid}</th>
+                    <th>{groupSite.siteId.$oid}</th>
                     <td>
-                      <a href={`/trend/?siteId=${site._id.$oid}`}>{site.name}</a>
+                      <a href={`/trend/?siteId=${groupSite.siteId.$oid}`}>{groupSite.siteName}</a>
                     </td>
                   </tr>
                 {/each}
