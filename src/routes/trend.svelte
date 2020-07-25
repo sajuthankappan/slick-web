@@ -1,6 +1,7 @@
 <script>
   import moment from 'moment';
   import { onMount } from 'svelte';
+  // eslint-disable-next-line import/no-extraneous-dependencies
   import { stores } from '@sapper/app';
   import { currentUser } from '../stores';
   import { getSite, getTrend } from '../helpers/data/reports';
@@ -9,14 +10,17 @@
   import IdPickerLevel from '../components/IdPickerLevel.svelte';
   import WebVitals from '../components/WebVitals.svelte';
   import ScoreTrendChart from '../components/ScoreTrendChart.svelte';
+  import QueueSiteModal from '../components/QueueSiteModal.svelte';
 
   let sitePromise;
   let trendPromise;
   let auditSummaries;
   let auditSummary;
+  let site;
   let siteId;
   let pageId;
   let auditProfile;
+  let showQueueSiteModal = false;
 
   const { page } = stores();
   const { query } = $page;
@@ -30,10 +34,10 @@
     auditSummaries = null;
 
     const idToken = await $currentUser.getIdToken();
-    const site = await getSite(siteId, idToken);
+    site = await getSite(siteId, idToken);
     if (site && site.pages && site.pages.length > 0) {
       pageId = site.pages[0].id;
-      auditProfile = site.auditProfiles[0];
+      [auditProfile] = site.auditProfiles;
     }
     return site;
   }
@@ -60,14 +64,22 @@
     trendPromise = null;
   }
 
-  async function handleSelectPageClicked(selectedPage, i) {
+  async function handleSelectPageClicked(selectedPage) {
     pageId = selectedPage.id;
     trendPromise = retrieveTrend();
   }
 
-  async function handleSelectProfileClicked(profile, i) {
+  async function handleSelectProfileClicked(profile) {
     auditProfile = profile;
     trendPromise = retrieveTrend();
+  }
+
+  async function handleQueueRunClicked() {
+    showQueueSiteModal = true;
+  }
+
+  async function handleQueueSiteDialogClosed(e) {
+    showQueueSiteModal = false;
   }
 
   async function handleChartClicked(e) {
@@ -112,7 +124,7 @@
                 </tr>
               </thead>
               <tbody>
-                {#each site.pages as page, i}
+                {#each site.pages as page}
                   <tr class:has-background-grey-light={page.id === pageId}>
                     <th>{page.name}</th>
                     <td>
@@ -123,7 +135,7 @@
                         <button
                           class="button is-small"
                           on:click={() => {
-                            handleSelectPageClicked(page, i);
+                            handleSelectPageClicked(page);
                           }}>
                           Select
                         </button>
@@ -133,6 +145,16 @@
                 {/each}
               </tbody>
             </table>
+            <button
+              class="button is-link is-outlined"
+              on:click={() => {
+                handleQueueRunClicked();
+              }}>
+              Queue New Run
+            </button>
+            {#if showQueueSiteModal}
+              <QueueSiteModal siteId={siteId} authentication={site.authentication}  on:close={handleQueueSiteDialogClosed} />
+            {/if}
           </div>
           <div class="column">
             <table class="table">
@@ -145,7 +167,7 @@
                 </tr>
               </thead>
               <tbody>
-                {#each site.auditProfiles as profile, i}
+                {#each site.auditProfiles as profile}
                   <tr class:has-background-grey-light={profile.id === auditProfile.id}>
                     <th>{profile.id}</th>
                     <td>{profile.name}</td>
@@ -154,7 +176,7 @@
                         <button
                           class="button is-small"
                           on:click={() => {
-                            handleSelectProfileClicked(profile, i);
+                            handleSelectProfileClicked(profile);
                           }}>
                           Select
                         </button>

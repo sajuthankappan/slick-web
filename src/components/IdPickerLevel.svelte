@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher, onMount } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
 
   export let id = '';
   export let label;
@@ -8,10 +8,6 @@
   let lhVersion = '6.0.0';
 
   const dispatch = createEventDispatcher();
-
-  onMount(async () => {
-    //id = initialId;
-  });
 
   async function handleRetrieveClick(e) {
     e.preventDefault();
