@@ -1,6 +1,7 @@
 <script>
   import { createEventDispatcher } from 'svelte';
   import { slide } from 'svelte/transition';
+  import { currentUser } from '../stores';
   import { queueSite } from '../helpers/data/reports';
   import HttpError from './HttpError.svelte';
   import Loading from './Loading.svelte';
@@ -38,7 +39,8 @@
         value: authenticationCookieValue,
       };
     }
-    queuePromise = queueSite(queueParameters);
+    const idToken = await $currentUser.getIdToken();
+    queuePromise = queueSite(queueParameters, idToken);
   }
 </script>
 

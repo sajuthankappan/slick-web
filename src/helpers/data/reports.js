@@ -1,7 +1,7 @@
 import sfetch from './slick-fetch';
 
 const slickUrlPrefix = '/slick';
-const slickQueueUrlPrefix = '/slick-queue';
+const slickQueueUrlPrefix = '/slick';
 
 export async function getReports(idToken) {
   const url = `${slickUrlPrefix}/report`;
