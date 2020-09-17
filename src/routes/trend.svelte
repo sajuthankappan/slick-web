@@ -161,16 +161,16 @@
               <caption>Profiles</caption>
               <thead>
                 <tr>
-                  <th>ID</th>
                   <th>Name</th>
+                  <th>ID</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
                 {#each site.auditProfiles as profile}
                   <tr class:has-background-grey-light={profile.id === auditProfile.id}>
-                    <th>{profile.id}</th>
                     <td>{profile.name}</td>
+                    <td>{profile.id}</td>
                     <td>
                       <div class="buttons">
                         <button

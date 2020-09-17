@@ -61,16 +61,18 @@
               <caption>Sites</caption>
               <thead>
                 <tr>
-                  <th>ID</th>
                   <th>Name</th>
+                  <th>ID</th>
                 </tr>
               </thead>
               <tbody>
                 {#each groupSites as groupSite, i}
                   <tr>
-                    <th>{groupSite.siteId.$oid}</th>
                     <td>
-                      <a href={`/trend/?siteId=${groupSite.siteId.$oid}`}>{groupSite.siteName}</a>
+                      {groupSite.siteName}
+                    </td>
+                    <td>
+                      <a href={`/trend/?siteId=${groupSite.siteId.$oid}`}>{groupSite.siteId.$oid}</a>
                     </td>
                   </tr>
                 {/each}
