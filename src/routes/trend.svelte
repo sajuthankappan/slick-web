@@ -219,10 +219,10 @@
                     Run: {auditSummary.siteRunId}
                   </div>
                   <div>
-                    Date: {moment(auditSummary.fetchTime).calendar()}
+                    Audit ID: {auditSummaryId}
                   </div>
                   <div>
-                    Audit ID: {auditSummaryId}
+                    Report ID: <a href={`/report/?id=${reportId}`}>{reportId}</a>
                   </div>
                 </div>
                 <div class="column">
@@ -230,7 +230,7 @@
                     Score: {score} (Lighouse {auditProfile.lighthouseVersion})
                   </div>
                   <div>
-                    Report: <a href={`/report/?id=${reportId}`}>{reportId}</a>
+                    Date: {moment(auditSummary.fetchTime).calendar()}
                   </div>
                   <div>
                     <button
