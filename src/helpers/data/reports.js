@@ -38,3 +38,8 @@ export async function queueSite(siteParameters, idToken) {
   const status = await sfetch.post(url, idToken, siteParameters);
   return status;
 }
+
+export async function deleteAuditSummary(auditSummaryId, idToken) {
+  const url = `${slickUrlPrefix}/summaries/${auditSummaryId}`;
+  await sfetch.del(url, idToken);
+}

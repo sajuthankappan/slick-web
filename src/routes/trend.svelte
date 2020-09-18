@@ -11,6 +11,7 @@
   import WebVitals from '../components/WebVitals.svelte';
   import ScoreTrendChart from '../components/ScoreTrendChart.svelte';
   import QueueSiteModal from '../components/QueueSiteModal.svelte';
+  import DeleteSummaryModal from '../components/DeleteSummaryModal.svelte';
 
   let sitePromise;
   let trendPromise;
@@ -21,6 +22,7 @@
   let pageId;
   let auditProfile;
   let showQueueSiteModal = false;
+  let showDeleteSummaryModal = false;
 
   const { page } = stores();
   const { query } = $page;
@@ -28,6 +30,7 @@
   $: webVitals = auditSummary && auditSummary.webVitals;
   $: score = auditSummary && Math.round(auditSummary.categories.performance.score * 100);
   $: reportId = auditSummary && auditSummary.auditDetailId.$oid;
+  $: auditSummaryId = auditSummary && auditSummary._id.$oid;
 
   async function retrieveSite() {
     auditSummary = null;
@@ -80,6 +83,14 @@
 
   async function handleQueueSiteDialogClosed(e) {
     showQueueSiteModal = false;
+  }
+
+  async function handleDeleteSummaryClicked() {
+    showDeleteSummaryModal = true;
+  }
+
+  async function handleDeleteSummaryDialogClosed(e) {
+    showDeleteSummaryModal = false;
   }
 
   async function handleChartClicked(e) {
@@ -210,6 +221,9 @@
                   <div>
                     Date: {moment(auditSummary.fetchTime).calendar()}
                   </div>
+                  <div>
+                    Audit ID: {auditSummaryId}
+                  </div>
                 </div>
                 <div class="column">
                   <div>
@@ -217,6 +231,18 @@
                   </div>
                   <div>
                     Report: <a href={`/report/?id=${reportId}`}>{reportId}</a>
+                  </div>
+                  <div>
+                    <button
+                      class="button is-warning is-light is-small"
+                      on:click={() => {
+                        handleDeleteSummaryClicked();
+                      }}>
+                      Delete Audit
+                    </button>
+                    {#if showDeleteSummaryModal}
+                      <DeleteSummaryModal auditSummaryId={auditSummaryId} on:close={handleDeleteSummaryDialogClosed} />
+                    {/if}
                   </div>
                 </div>
               </div>

@@ -54,9 +54,9 @@
       </header>
       <section class="modal-card-body">
         <div class="field">
-          <label class="label">Site ID</label>
+          <label class="label" for="siteId">Site ID</label>
           <div class="control">
-            <input class="input" type="text" bind:value={siteId} readonly>
+            <input class="input" type="text" id="siteId" bind:value={siteId} readonly>
           </div>
         </div>
         <div class="field">
@@ -69,15 +69,15 @@
         </div>
         {#if needsAuthentication}
           <div class="field" slide>
-            <label class="label">Cookie Name</label>
+            <label class="label" for="authenticationCookieName">Cookie Name</label>
             <div class="control">
-            <input class="input" type="text" bind:value={authenticationCookieName} required>
+            <input class="input" type="text" id="authenticationCookieName" bind:value={authenticationCookieName} required>
             </div>
           </div>
           <div class="field" in:slide>
-            <label class="label">Cookie Value</label>
+            <label class="label" for="authenticationCookieValue">Cookie Value</label>
             <div class="control">
-            <input class="input" type="text" bind:value={authenticationCookieValue} required>
+            <input class="input" type="text" id="authenticationCookieValue" bind:value={authenticationCookieValue} required>
             </div>
           </div>
         {/if}
