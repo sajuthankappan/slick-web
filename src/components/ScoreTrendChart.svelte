@@ -1,5 +1,5 @@
 <script>
-  import moment from 'moment';
+  import dayjs from 'dayjs';
   import Chart from 'chart.js';
   import { createEventDispatcher, onMount } from 'svelte';
   import { mapTrend } from '../helpers/chart-helpers.js';
@@ -26,7 +26,7 @@
           callbacks: {
             footer: (tooltipItems, tooltipData) => {
               const currentIndex = tooltipItems[0].index;
-              return moment(data[currentIndex].fetchTime).calendar();
+              return dayjs(data[currentIndex].fetchTime).format('DD MMM YYYY, h:mm a');
             },
           },
           footerFontStyle: 'normal',

@@ -1,9 +1,9 @@
 <script context="module">
-  import moment from 'moment';
+  import dayjs from 'dayjs';
 
   export async function preload() {
     const appVersion = '0.4.4';
-    const builtAt = moment().format('DD MMM YYYY, h:mm:ss a');
+    const builtAt = dayjs().format('DD MMM YYYY, h:mm a');
     return { appVersion, builtAt };
   }
 </script>

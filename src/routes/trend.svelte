@@ -1,5 +1,5 @@
 <script>
-  import moment from 'moment';
+  import dayjs from 'dayjs';
   import { onMount } from 'svelte';
   // eslint-disable-next-line import/no-extraneous-dependencies
   import { stores } from '@sapper/app';
@@ -230,7 +230,7 @@
                     Score: {score} (Lighouse {auditProfile.lighthouseVersion})
                   </div>
                   <div>
-                    Date: {moment(auditSummary.fetchTime).calendar()}
+                    Date: {dayjs(auditSummary.fetchTime).format('DD MMM YYYY, h:mm a')}
                   </div>
                   <div>
                     <button

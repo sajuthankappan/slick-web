@@ -1,5 +1,5 @@
 <script>
-  import moment from 'moment';
+  import dayjs from 'dayjs';
   import { onMount } from 'svelte';
   import { stores } from '@sapper/app';
   import marked from 'marked';
@@ -71,7 +71,7 @@
       {#if report}
         <div class="box has-text-centered">
           <div><a href={report.requestedUrl}>{report.requestedUrl}</a></div>
-          <div>Date: {moment(report.fetchTime).calendar()}</div>
+          <div>Date: {dayjs(report.fetchTime).format('DD MMM YYYY, h:mm a')}</div>
           <div>Score: {Math.round(report.categories.performance.score * 100)} (Lighthouse {report.lighthouseVersion} {report.configSettings.emulatedFormFactor})</div>
           <div><a href={getLighthouseCalculatorUrl(report)}>Lighthouse Scoring Calculator</a></div>
         </div>
