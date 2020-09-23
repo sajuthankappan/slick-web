@@ -5,6 +5,7 @@
 <style>
   .url {
     max-width: 500px;
+    word-wrap: break-word;
   }
 </style>
 
