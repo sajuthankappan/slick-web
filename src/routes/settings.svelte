@@ -22,8 +22,8 @@
       showClearCache = false;
     }
 
-    if (!('unshiftManager' in window)) {
-      warn('unshiftManager not available');
+    if (!('Notification' in window)) {
+      warn('Notification not available');
       showEnableNotification = false;
     }
 
@@ -99,18 +99,18 @@
       <ul class="menu-list">
         {#if showClearCache}
           <li>
-            <a href="javascript:void(0)" on:click={handleClearCacheClick}>Clear Cached Data</a>
+            <span class=" cursor-pointer" on:click={handleClearCacheClick}>Clear Cached Data</span>
           </li>
         {/if}
         <li>
           {#if notificationGranted}
-            <a href="javascript:void(0)" on:click={handleTestNotifyClick}>Test Notify</a>
+            <span class=" cursor-pointer" on:click={handleTestNotifyClick}>Test Notify</span>
           {:else if notificationDenied}
             <div class="notification is-danger">
               Notified was denied. Please check your browser permissions.
             </div>
           {:else if showEnableNotification}
-            <a href="javascript:void(0)" on:click={handleEnableNotificationClick}>Enable Notification</a>
+            <span class=" cursor-pointer" on:click={handleEnableNotificationClick}>Enable Notification</span>
           {/if}
         </li>
       </ul>

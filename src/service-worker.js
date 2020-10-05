@@ -54,8 +54,9 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  if (url.hostname.includes('api.saju.workers.dev') && offlineApiResponses.has(url.pathname)) {
-    console.log('responding from cache for ', url.pathname);
+  // serve api responses from cache, if available
+  if (url.hostname.includes('saju.azure-api.net') && offlineApiResponses.has(url.pathname)) {
+    console.log('responding from offline api responses for ', url.pathname);
     event.respondWith(caches.match(event.request));
     return;
   }
@@ -86,9 +87,9 @@ self.addEventListener('fetch', (event) => {
           const urlObject = new URL(event.request.url);
 
           if (event.request.method === 'GET') {
-            if (urlObject.hostname.includes('saju.workers.dev')) {
+            if (urlObject.hostname.includes('saju.azure-api.net')) {
               if (!urlObject.pathname.startsWith('/api/slick/trend')) {
-                console.log('adding to offlineApiResponses ', urlObject.pathname);
+                console.log('adding to offline api responses ', urlObject.pathname);
                 offlineApiResponses.add(urlObject.pathname);
               }
             }
