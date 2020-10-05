@@ -99,18 +99,18 @@
       <ul class="menu-list">
         {#if showClearCache}
           <li>
-            <span class=" cursor-pointer" on:click={handleClearCacheClick}>Clear Cached Data</span>
+            <a href="javascript:void(0)" on:click={handleClearCacheClick}>Clear Cached Data</a>
           </li>
         {/if}
         <li>
           {#if notificationGranted}
-            <span class=" cursor-pointer" on:click={handleTestNotifyClick}>Test Notify</span>
+            <a href="javascript:void(0)" on:click={handleTestNotifyClick}>Test Notify</a>
           {:else if notificationDenied}
             <div class="notification is-danger">
               Notified was denied. Please check your browser permissions.
             </div>
           {:else if showEnableNotification}
-            <span class=" cursor-pointer" on:click={handleEnableNotificationClick}>Enable Notification</span>
+            <a href="javascript:void(0)" on:click={handleEnableNotificationClick}>Enable Notification</a>
           {/if}
         </li>
       </ul>
