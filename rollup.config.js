@@ -27,7 +27,9 @@ const firebaseAppId = process.env.SLICK_FIREBASE_APP_ID;
 const apiBaseUrl = process.env.SLICK_API_BASE_URL;
 const stravaAuthorizeUrl = process.env.SLICK_STRAVA_AUTHORIZE_URL;
 
-const onwarn = (warning, onwarn) => (warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message)) || onwarn(warning);
+const onwarn = (warning, onwarn) => (warning.code === 'MISSING_EXPORT' && /'preload'/.test(warning.message))
+  || (warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message))
+  || onwarn(warning);
 
 const preprocess = sveltePreprocess({
   scss: {
