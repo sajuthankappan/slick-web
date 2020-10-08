@@ -131,7 +131,7 @@
             {#if report.usesHttp2}
               <section class="section">
                 <h2 class="title is-5">{report.usesHttp2.title}</h2>
-                <AuditTable data={report.usesHttp2.details} />
+                <AuditOpportunity data={report.usesHttp2.details} />
               </section>
             {/if}
             {#if report.usesLongCacheTtl}
