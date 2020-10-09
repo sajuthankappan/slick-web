@@ -6,12 +6,13 @@ Slick Web UI using Svelte.js
 
 - Svelte.js
 - Sapper.js
+- Bulma CSS
 
 ## How to use
 
 Download the code [or clone the repo](https://gitlab.com/sajuthankappan/slick-web/)
 
-copy .env file to the root of the project
+create/copy .env file, at the root of the project
 
 Install npm packages and run:
 

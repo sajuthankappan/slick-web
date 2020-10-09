@@ -13,14 +13,14 @@
     "lint": "eslint \"**/*.svelte\" --ignore-pattern node_modules/"
   },
   "dependencies": {
-    "bulma": "^0.9.0",
+    "bulma": "^0.9.1",
     "chart.js": "^2.9.3",
     "compression": "^1.7.1",
-    "dayjs": "^1.8.36",
+    "dayjs": "^1.9.1",
     "dotenv": "^8.2.0",
-    "firebase": "^7.20.0",
+    "firebase": "^7.22.1",
     "firebaseui": "^4.6.1",
-    "marked": "^1.1.1",
+    "marked": "^1.2.0",
     "nprogress": "^0.2.0",
     "polka": "next",
     "sirv": "^1.0.6"
@@ -38,19 +38,19 @@
     "@rollup/plugin-wasm": "^3.0.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.2.0",
-    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-svelte3": "^2.7.3",
     "node-sass": "^4.14.1",
     "npm-run-all": "^4.1.5",
-    "postcss": "^7.0.34",
-    "rollup": "^2.27.1",
+    "postcss": "^7.0.35",
+    "rollup": "^2.29.0",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-svelte": "^5.2.3",
     "rollup-plugin-terser": "^5.3.1",
-    "sapper": "^0.28.7",
-    "svelte": "^3.25.1",
+    "sapper": "^0.28.10",
+    "svelte": "^3.29.0",
     "svelte-loader": "^2.13.6",
     "svelte-preprocess": "^3.9.12",
-    "webpack": "^4.44.1"
+    "webpack": "^4.44.2"
   }
 }
