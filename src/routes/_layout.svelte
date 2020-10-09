@@ -1,22 +1,29 @@
 <script>
+  import GoogleAnalytics from 'sapper-google-analytics/GoogleAnalytics.svelte';
+  // eslint-disable-next-line import/no-extraneous-dependencies
+  import { stores } from '@sapper/app';
   import Nav from '../components/Nav.svelte';
   import FirebaseAuthObserver from '../components/FirebaseAuthObserver.svelte';
   import { currentUser, loading } from '../stores';
   import Login from './login.svelte';
 
   export let segment;
+  // eslint-disable-next-line prefer-destructuring
+  const gaKey = process.env.SLICK_GA_KEY;
 </script>
 
 <style lang="scss" global>
   @import "../style/global.scss";
 </style>
 
+<GoogleAnalytics {stores} id={gaKey}/>
+
 <FirebaseAuthObserver />
 
 {#if !$loading}
   <Nav {segment} />
 
-  {#if !$currentUser && segment !== 'login' && segment != 'report'}
+  {#if !$currentUser && segment !== 'login' && segment !== 'report'}
     <Login />
   {:else}
     <main>

@@ -26,6 +26,7 @@ const firebaseStorageBucket = `${firebaseProjectId}.appspot.com`;
 const firebaseAppId = process.env.SLICK_FIREBASE_APP_ID;
 const apiBaseUrl = process.env.SLICK_API_BASE_URL;
 const stravaAuthorizeUrl = process.env.SLICK_STRAVA_AUTHORIZE_URL;
+const gaKey = process.env.SLICK_GA_KEY;
 
 const onwarn = (warning, onwarn) => (warning.code === 'MISSING_EXPORT' && /'preload'/.test(warning.message))
   || (warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message))
@@ -64,6 +65,7 @@ export default {
         'process.env.SLICK_FIREBASE_APP_ID': JSON.stringify(firebaseAppId),
         'process.env.SLICK_API_BASE_URL': JSON.stringify(apiBaseUrl),
         'process.env.SLICK_STRAVA_AUTHORIZE_URL': JSON.stringify(stravaAuthorizeUrl),
+        'process.env.SLICK_GA_KEY': JSON.stringify(gaKey),
       }),
       svelte({
         dev,

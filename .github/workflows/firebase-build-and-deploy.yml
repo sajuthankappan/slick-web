@@ -22,6 +22,7 @@ jobs:
           SLICK_FIREBASE_APP_ID: ${{ secrets.SLICK_FIREBASE_APP_ID }}
           SLICK_FIREBASE_AUTH_DOMAIN: ${{ secrets.SLICK_FIREBASE_AUTH_DOMAIN }}
           SLICK_API_BASE_URL: ${{ secrets.SLICK_API_BASE_URL }}
+          SLICK_GA_KEY: ${{ secrets.SLICK_GA_KEY }}
       - name: Archive Production Artifact
         uses: actions/upload-artifact@master
         with:
