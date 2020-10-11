@@ -1,6 +1,7 @@
 <script>
   import dayjs from 'dayjs';
   import { onMount } from 'svelte';
+  // eslint-disable-next-line import/no-extraneous-dependencies
   import { stores } from '@sapper/app';
   import marked from 'marked';
   import { currentUser } from '../stores';
@@ -123,7 +124,7 @@
           {:else if currentTab === 'requests'}
             {#if report.networkRequests}
               <h2 class="title is-5">Chart</h2>
-              <NetworkRequestsChart data={{networkRequests: report.networkRequests, mainThreadTasks: report.mainThreadTasks}} />
+              <NetworkRequestsChart data={{ networkRequests: report.networkRequests, mainThreadTasks: report.mainThreadTasks }} />
               <h2 class="title is-5">Network Requests</h2>
               <NetworkRequests data={report.networkRequests} />
             {/if}
@@ -176,6 +177,12 @@
               </section>
             {/if}
           {:else if currentTab === 'scripts'}
+            {#if report.userTimings && report.userTimings.details}
+              <section class="section">
+                <h2 class="title is-5">{report.userTimings.title}</h2>
+                <AuditTable data={report.userTimings.details} />
+              </section>
+            {/if}
             {#if report.mainThreadWorkBreakdown && report.mainThreadWorkBreakdown.details}
               <section class="section">
                 <h2 class="title is-5">Main Thread Tasks</h2>
