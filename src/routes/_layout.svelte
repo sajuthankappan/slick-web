@@ -4,8 +4,7 @@
   import { stores } from '@sapper/app';
   import Nav from '../components/Nav.svelte';
   import FirebaseAuthObserver from '../components/FirebaseAuthObserver.svelte';
-  import { currentUser, loading } from '../stores';
-  import Login from './login.svelte';
+  import { loading } from '../stores';
 
   export let segment;
   // eslint-disable-next-line prefer-destructuring
