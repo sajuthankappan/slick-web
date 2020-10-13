@@ -18,18 +18,13 @@
 
 <GoogleAnalytics {stores} id={gaKey}/>
 
-<FirebaseAuthObserver />
+<FirebaseAuthObserver {segment} />
 
 {#if !$loading}
   <Nav {segment} />
-
-  {#if !$currentUser && segment !== 'login' && segment !== 'report'}
-    <Login />
-  {:else}
-    <main>
-      <slot />
-    </main>
-  {/if}
+  <main>
+    <slot />
+  </main>
 
   <footer class="footer">
     <div class="content has-text-centered">
