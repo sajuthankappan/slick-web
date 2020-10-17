@@ -1,6 +1,6 @@
 <script>
   import { onMount } from 'svelte';
-  import { currentUser } from '../stores';
+  import { currentUser, currentUserClaims } from '../stores';
   import UserNavItems from './UserNavItems.svelte';
   import { signOut } from '../helpers/firebase/auth';
 
@@ -47,7 +47,7 @@
     on:click={() => {
       menuOpen = !menuOpen;
     }}>
-    {#if $currentUser}
+    {#if $currentUser && $currentUserClaims && $currentUserClaims.slickUser}
       <div class="navbar-start">
         <UserNavItems {segment} />
       </div>
