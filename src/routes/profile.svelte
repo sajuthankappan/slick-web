@@ -20,13 +20,13 @@
     </section>
     <section class="section">
       <div class="field">
-        <label class="label">Email</label>
+        <div class="label">Email</div>
         <div class="control">
           {$currentUser.email}
         </div>
       </div>
       <div class="field">
-        <label class="label">Email Verified</label>
+        <div class="label">Email Verified</div>
         <div class="control">
           {#if $currentUserClaims.email_verified}Yes{:else}No{/if}
         </div>

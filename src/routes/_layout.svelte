@@ -4,8 +4,7 @@
   import { stores } from '@sapper/app';
   import Nav from '../components/Nav.svelte';
   import FirebaseAuthObserver from '../components/FirebaseAuthObserver.svelte';
-  import { currentUser, loading } from '../stores';
-  import Login from './login.svelte';
+  import { loading } from '../stores';
 
   export let segment;
   // eslint-disable-next-line prefer-destructuring
@@ -18,18 +17,13 @@
 
 <GoogleAnalytics {stores} id={gaKey}/>
 
-<FirebaseAuthObserver />
+<FirebaseAuthObserver {segment} />
 
 {#if !$loading}
   <Nav {segment} />
-
-  {#if !$currentUser && segment !== 'login' && segment !== 'report'}
-    <Login />
-  {:else}
-    <main>
-      <slot />
-    </main>
-  {/if}
+  <main>
+    <slot />
+  </main>
 
   <footer class="footer">
     <div class="content has-text-centered">

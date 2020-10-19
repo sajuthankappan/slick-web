@@ -51,22 +51,24 @@
   </div>
 
   <div class="field">
-    <label class="label">Email</label>
+    <label class="label" for="email">Email</label>
     <div class="control">
       <input
         type="text"
         class="input is-primary"
         placeholder="email"
+        id="email"
         bind:value={email} />
     </div>
   </div>
 
   <div class="field">
-    <label class="label">Password</label>
+    <label class="label" for="password">Password</label>
     <div class="control">
       <input
         type="password"
         class="input is-primary"
+        id="password"
         placeholder="password"
         bind:value={password} />
     </div>

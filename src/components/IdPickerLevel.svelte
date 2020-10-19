@@ -23,7 +23,7 @@
       <form on:submit={handleRetrieveClick}>
         <div class="field is-horizontal">
           <div class="field-label is-normal">
-            <label class="label">{label}</label>
+            <label class="label" for="id">{label}</label>
           </div>
           <div class="field-body">
             <div class="field has-addons">
@@ -31,6 +31,7 @@
                 <input
                   class="input"
                   bind:value={id}
+                  id="id"
                   type="text" />
               </div>
               <div class="control">

@@ -13,6 +13,16 @@ export async function ensureSlickUser(user) {
   throw new Error('Not slick user');
 }
 
+export async function isSlickUser(user) {
+  const idTokenResult = await user.getIdTokenResult();
+
+  if (idTokenResult.claims && idTokenResult.claims.slickUser) {
+    return idTokenResult.claims;
+  }
+
+  return false;
+}
+
 export async function getRider() {
   throw new Error('Not implemented');
 }
