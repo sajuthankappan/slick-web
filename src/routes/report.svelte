@@ -4,7 +4,7 @@
   // eslint-disable-next-line import/no-extraneous-dependencies
   import { stores } from '@sapper/app';
   import marked from 'marked';
-  import { currentUser } from '../stores';
+  import { currentUser, reportId } from '../stores';
   import { getReport } from '../helpers/data/reports';
   import { getLighthouseCalculatorUrl } from '../helpers/lighthouse/calc';
   import Loading from '../components/Loading.svelte';
@@ -19,7 +19,6 @@
   import NetworkRequestsChart from '../components/NetworkRequestsChart.svelte';
   import ThirdPartySummary from '../components/ThirdPartySummary.svelte';
 
-  let reportId;
   let promise;
   let currentTab = 'general';
 
@@ -29,24 +28,27 @@
   async function retrieve() {
     if ($currentUser) {
       const idToken = await $currentUser.getIdToken();
-      const report = await getReport(reportId, idToken);
+      const report = await getReport($reportId, idToken);
       return report;
     }
   
-    const report = await getReport(reportId);
+    const report = await getReport($reportId);
     return report;
   }
 
   onMount(async () => {
     if (query && query.id) {
-      reportId = query.id;
+      reportId.set(query.id);
+    }
+  
+    if ($reportId) {
       promise = retrieve();
     }
   });
 
   async function handleRetrieveClick(e) {
     e.preventDefault();
-    reportId = e.detail.id;
+    reportId.set(e.detail.id);
     promise = retrieve();
   }
 </script>
@@ -62,7 +64,7 @@
 
   <section class="section">
     <IdPickerLevel label="Report ID" 
-      id={reportId} 
+      id={$reportId} 
       on:retrieve={handleRetrieveClick}
     />
 

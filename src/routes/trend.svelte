@@ -3,7 +3,7 @@
   import { onMount } from 'svelte';
   // eslint-disable-next-line import/no-extraneous-dependencies
   import { stores } from '@sapper/app';
-  import { currentUser } from '../stores';
+  import { currentUser, siteId } from '../stores';
   import { getSite, getTrend } from '../helpers/data/reports';
   import Loading from '../components/Loading.svelte';
   import HttpError from '../components/HttpError.svelte';
@@ -18,7 +18,6 @@
   let auditSummaries;
   let auditSummary;
   let site;
-  let siteId;
   let pageId;
   let auditProfile;
   let showQueueSiteModal = false;
@@ -30,6 +29,7 @@
   $: webVitals = auditSummary && auditSummary.webVitals;
   $: score = auditSummary && Math.round(auditSummary.categories.performance.score * 100);
   $: reportId = auditSummary && auditSummary.auditDetailId.$oid;
+  // eslint-disable-next-line no-underscore-dangle
   $: auditSummaryId = auditSummary && auditSummary._id.$oid;
 
   async function retrieveSite() {
@@ -37,7 +37,7 @@
     auditSummaries = null;
 
     const idToken = await $currentUser.getIdToken();
-    site = await getSite(siteId, idToken);
+    site = await getSite($siteId, idToken);
     if (site && site.pages && site.pages.length > 0) {
       pageId = site.pages[0].id;
       [auditProfile] = site.auditProfiles;
@@ -48,21 +48,24 @@
   async function retrieveTrend() {
     auditSummary = null;
     const idToken = await $currentUser.getIdToken();
-    const trend = await getTrend(siteId, pageId, auditProfile.id, idToken);
+    const trend = await getTrend($siteId, pageId, auditProfile.id, idToken);
     auditSummaries = trend;
     return trend;
   }
 
   onMount(async () => {
     if (query && query.siteId) {
-      siteId = query.siteId;
+      siteId.set(query.siteId);
+    }
+  
+    if ($siteId) {
       sitePromise = retrieveSite();
     }
   });
 
   async function handleRetrieveSiteClicked(e) {
     e.preventDefault();
-    siteId = e.detail.id;
+    siteId.set(e.detail.id);
     sitePromise = retrieveSite();
     trendPromise = null;
   }
@@ -81,7 +84,7 @@
     showQueueSiteModal = true;
   }
 
-  async function handleQueueSiteDialogClosed(e) {
+  async function handleQueueSiteDialogClosed() {
     showQueueSiteModal = false;
   }
 
@@ -89,7 +92,7 @@
     showDeleteSummaryModal = true;
   }
 
-  async function handleDeleteSummaryDialogClosed(e) {
+  async function handleDeleteSummaryDialogClosed() {
     showDeleteSummaryModal = false;
   }
 
@@ -114,7 +117,7 @@
   <section class="section">
     <IdPickerLevel
       label="Site ID"
-      id={siteId}
+      id={$siteId}
       showVersion={false}
       on:retrieve={handleRetrieveSiteClicked}
     />
@@ -164,7 +167,7 @@
               Queue New Run
             </button>
             {#if showQueueSiteModal}
-              <QueueSiteModal siteId={siteId} authentication={site.authentication}  on:close={handleQueueSiteDialogClosed} />
+              <QueueSiteModal siteId={$siteId} authentication={site.authentication}  on:close={handleQueueSiteDialogClosed} />
             {/if}
           </div>
           <div class="column">

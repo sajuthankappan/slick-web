@@ -97,6 +97,9 @@
         System
       </p>
       <ul class="menu-list">
+        <li>
+          <a href="/about">About</a>
+        </li>
         {#if showClearCache}
           <li>
             <a href="javascript:void(0)" on:click={handleClearCacheClick}>Clear Cached Data</a>

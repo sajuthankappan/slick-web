@@ -1,16 +1,15 @@
-<script context="module">
+<script>
+  import { onMount } from 'svelte';
   import dayjs from 'dayjs';
 
-  export async function preload() {
-    const appVersion = '0.4.4';
-    const builtAt = dayjs().format('DD MMM YYYY, h:mm a');
-    return { appVersion, builtAt };
-  }
-</script>
+  let appVersion;
+  let builtAtLocal;
 
-<script>
-  export let builtAt;
-  export let appVersion;
+  onMount(async () => {
+    appVersion = process.env.SLICK_VERSION;
+    const builtAtString = process.env.SLICK_BUILT_AT;
+    builtAtLocal = dayjs(builtAtString).format('MMM D YYYY h:mm:ss a');
+  });
 </script>
 
 <svelte:head>
@@ -23,7 +22,7 @@
   <section class="section">
     <div class="box">
       <p>Version {appVersion}</p>
-      <p>Built at {builtAt}</p>
+      <p>Built at {builtAtLocal}</p>
     </div>
   </section>
 </div>

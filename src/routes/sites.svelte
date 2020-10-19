@@ -1,14 +1,14 @@
 <script>
   import { onMount } from 'svelte';
+  // eslint-disable-next-line import/no-extraneous-dependencies
   import { stores } from '@sapper/app';
-  import { currentUser } from '../stores';
+  import { currentUser, groupId } from '../stores';
   import { getGroupSites } from '../helpers/data/reports';
   import Loading from '../components/Loading.svelte';
   import HttpError from '../components/HttpError.svelte';
   import IdPickerLevel from '../components/IdPickerLevel.svelte';
 
   let groupSitesPromise;
-  let groupId;
 
   const { page } = stores();
   const { query } = $page;
@@ -16,20 +16,23 @@
 
   async function retrieveGroupSites() {
     const idToken = await $currentUser.getIdToken();
-    const group = await getGroupSites(groupId, idToken);
+    const group = await getGroupSites($groupId, idToken);
     return group;
   }
 
   onMount(async () => {
     if (query && query.groupId) {
-      groupId = query.groupId;
+      groupId.set(query.groupId);
+    }
+  
+    if ($groupId) {
       groupSitesPromise = retrieveGroupSites();
     }
   });
 
   async function handleRetrieveGroupClicked(e) {
     e.preventDefault();
-    groupId = e.detail.id;
+    groupId.set(e.detail.id);
     groupSitesPromise = retrieveGroupSites();
   }
 </script>
@@ -46,7 +49,7 @@
   <section class="section">
     <IdPickerLevel
       label="Group ID"
-      id={groupId}
+      id={$groupId}
       showVersion={false}
       on:retrieve={handleRetrieveGroupClicked}
     />
