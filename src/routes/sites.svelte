@@ -56,8 +56,8 @@
 
     {#await groupSitesPromise}
       <Loading />
-    {:then groupSites}
-      {#if groupSites}
+    {:then sites}
+      {#if sites}
         <div class="columns">
           <div class="column">
             <table class="table">
@@ -69,13 +69,13 @@
                 </tr>
               </thead>
               <tbody>
-                {#each groupSites as groupSite, i}
+                {#each sites as site, i}
                   <tr>
                     <td>
-                      {groupSite.siteName}
+                      {site.name}
                     </td>
                     <td>
-                      <a href={`/trend/?siteId=${groupSite.siteId.$oid}`}>{groupSite.siteId.$oid}</a>
+                      <a href={`/trend/?siteId=${site._id.$oid}`}>{site._id.$oid}</a>
                     </td>
                   </tr>
                 {/each}
