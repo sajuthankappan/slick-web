@@ -45,7 +45,7 @@ const preprocess = sveltePreprocess({
         './src/components/**/*.*',
         './src/template.html',
       ],
-      whitelist: ['bar', 'spinner'],
+      whitelist: ['bar', 'spinner', 'is-selected'],
     })],
   }),
 });

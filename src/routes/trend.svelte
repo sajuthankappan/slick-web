@@ -4,7 +4,8 @@
   // eslint-disable-next-line import/no-extraneous-dependencies
   import { stores } from '@sapper/app';
   import { currentUser, siteId } from '../stores';
-  import { getSite, getTrend } from '../helpers/data/reports';
+  import { getTrend } from '../helpers/data/report';
+  import { getSite } from '../helpers/data/site';
   import Loading from '../components/Loading.svelte';
   import HttpError from '../components/HttpError.svelte';
   import IdPickerLevel from '../components/IdPickerLevel.svelte';
@@ -139,7 +140,7 @@
               </thead>
               <tbody>
                 {#each site.pages as page}
-                  <tr class:has-background-grey-light={page.id === pageId}>
+                  <tr class:is-selected={page.id === pageId}>
                     <th>{page.name}</th>
                     <td>
                       <a href={page.url}>{page.url}</a>
@@ -182,7 +183,7 @@
               </thead>
               <tbody>
                 {#each site.auditProfiles as profile}
-                  <tr class:has-background-grey-light={profile.id === auditProfile.id}>
+                  <tr class:is-selected={profile.id === auditProfile.id}>
                     <td>{profile.name}</td>
                     <td>{profile.id}</td>
                     <td>

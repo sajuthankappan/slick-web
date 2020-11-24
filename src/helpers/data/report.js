@@ -15,18 +15,6 @@ export async function getReport(reportId, idToken) {
   return report;
 }
 
-export async function getSite(siteId, idToken) {
-  const url = `${slickUrlPrefix}/sites/${siteId}`;
-  const site = await sfetch.get(url, idToken);
-  return site;
-}
-
-export async function getGroupSites(groupId, idToken) {
-  const url = `${slickUrlPrefix}/group-sites/${groupId}`;
-  const sites = await sfetch.get(url, idToken);
-  return sites;
-}
-
 export async function getTrend(siteId, pageId, auditProfileId, idToken) {
   const url = `${slickUrlPrefix}/trend/${siteId}/${pageId}/${auditProfileId}`;
   const trend = await sfetch.get(url, idToken);

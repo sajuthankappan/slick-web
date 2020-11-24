@@ -5,7 +5,7 @@
   import { stores } from '@sapper/app';
   import marked from 'marked';
   import { currentUser, reportId } from '../stores';
-  import { getReport } from '../helpers/data/reports';
+  import { getReport } from '../helpers/data/report';
   import { getLighthouseCalculatorUrl } from '../helpers/lighthouse/calc';
   import Loading from '../components/Loading.svelte';
   import HttpError from '../components/HttpError.svelte';

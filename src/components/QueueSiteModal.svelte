@@ -2,7 +2,7 @@
   import { createEventDispatcher } from 'svelte';
   import { slide } from 'svelte/transition';
   import { currentUser } from '../stores';
-  import { queueSite } from '../helpers/data/reports';
+  import { queueSite } from '../helpers/data/report';
   import HttpError from './HttpError.svelte';
   import Loading from './Loading.svelte';
 

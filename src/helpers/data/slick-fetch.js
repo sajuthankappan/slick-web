@@ -76,7 +76,7 @@ async function post(url, token = null, data = null) {
 }
 
 async function put(url, token = null, data = null) {
-  const response = slickFetch(url, token, 'PUT', data);
+  const response = await slickFetch(url, token, 'PUT', data);
   return getResponseData(response);
 }
 
