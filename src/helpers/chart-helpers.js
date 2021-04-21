@@ -74,8 +74,6 @@ export function mapScoreWebVitalsTrend(data) {
         borderColor: 'blue',
         data: fcpData,
         fill: false,
-        pointRadius: 10,
-        pointHoverRadius: 15,
       }, {
         label: 'SI',
         type: 'line',
@@ -83,8 +81,6 @@ export function mapScoreWebVitalsTrend(data) {
         borderColor: 'green',
         data: speedIndexData,
         fill: false,
-        pointRadius: 10,
-        pointHoverRadius: 15,
       }, {
         label: 'LCP',
         type: 'line',
@@ -92,8 +88,6 @@ export function mapScoreWebVitalsTrend(data) {
         borderColor: 'brown',
         data: largestContentfulPaintData,
         fill: false,
-        pointRadius: 10,
-        pointHoverRadius: 15,
       }, {
         label: 'TTI',
         type: 'line',
@@ -101,8 +95,6 @@ export function mapScoreWebVitalsTrend(data) {
         borderColor: 'darkcyan',
         data: interactivepDatainteractivepData,
         fill: false,
-        pointRadius: 10,
-        pointHoverRadius: 15,
       }, {
         label: 'TBT',
         type: 'line',
@@ -110,8 +102,6 @@ export function mapScoreWebVitalsTrend(data) {
         borderColor: 'indigo',
         data: totalBlockingTimeData,
         fill: false,
-        pointRadius: 10,
-        pointHoverRadius: 15,
       }, {
         label: 'CLS',
         type: 'line',
@@ -119,16 +109,12 @@ export function mapScoreWebVitalsTrend(data) {
         borderColor: 'olive',
         data: cumulativeLayoutShiftData,
         fill: false,
-        pointRadius: 10,
-        pointHoverRadius: 15,
       }, {
         label: 'Score',
         backgroundColor: 'rgb(255, 99, 132)',
         borderColor: 'rgb(255, 99, 132)',
         data: scoreData,
         fill: false,
-        pointRadius: 10,
-        pointHoverRadius: 15,
       }, 
     ],
   };
