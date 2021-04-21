@@ -100,7 +100,7 @@
                     </td>
                     <td>
                       <div class="buttons">
-                        <a class="button is-small" href={`/trend/?siteId=${site._id.$oid}`}>Report</a>
+                        <a class="button is-small" href={`/trend/?siteId=${site._id.$oid}`}>Trend</a>
                         <button
                           class="button is-small"
                           on:click={() => {

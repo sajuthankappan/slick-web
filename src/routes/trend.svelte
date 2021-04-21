@@ -10,7 +10,7 @@
   import HttpError from '../components/HttpError.svelte';
   import IdPickerLevel from '../components/IdPickerLevel.svelte';
   import WebVitals from '../components/WebVitals.svelte';
-  import ScoreTrendChart from '../components/ScoreTrendChart.svelte';
+  import ScoreWebVitalsTrendChart from '../components/ScoreWebVitalsTrendChart.svelte';
   import QueueSiteModal from '../components/QueueSiteModal.svelte';
   import DeleteSummaryModal from '../components/DeleteSummaryModal.svelte';
 
@@ -212,7 +212,7 @@
     {:then summaries}
       {#if summaries}
         <div>
-          <ScoreTrendChart data={summaries} on:chartclick={handleChartClicked} />
+          <ScoreWebVitalsTrendChart data={summaries} on:chartclick={handleChartClicked} />
         </div>
         <div>
           {#if webVitals}

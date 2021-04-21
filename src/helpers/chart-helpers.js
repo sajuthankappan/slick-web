@@ -41,3 +41,95 @@ export function mapTrend(data) {
     }],
   };
 }
+
+
+export function mapScoreWebVitalsTrend(data) {
+  const labels = [];
+  const scoreData = [];
+  const fcpData = [];
+  const speedIndexData = [];
+  const largestContentfulPaintData = [];
+  const interactivepDatainteractivepData = [];
+  const totalBlockingTimeData = [];
+  const cumulativeLayoutShiftData = [];
+
+  data.forEach((summary) => {
+    labels.push(summary.siteRunId);
+    scoreData.push(Math.round(summary.categories.performance.score * 100));
+    fcpData.push(Math.round(summary.webVitals.firstContentfulPaint.score * 100))
+    speedIndexData.push(Math.round(summary.webVitals.speedIndex.score * 100))
+    largestContentfulPaintData.push(Math.round(summary.webVitals.largestContentfulPaint.score * 100))
+    interactivepDatainteractivepData.push(Math.round(summary.webVitals.interactive.score * 100))
+    totalBlockingTimeData.push(Math.round(summary.webVitals.totalBlockingTime.score * 100))
+    cumulativeLayoutShiftData.push(Math.round(summary.webVitals.cumulativeLayoutShift.score * 100))
+  });
+
+  return {
+    labels,
+    datasets: [
+      {
+        label: 'FCP',
+        type: 'line',
+        backgroundColor: 'blue',
+        borderColor: 'blue',
+        data: fcpData,
+        fill: false,
+        pointRadius: 10,
+        pointHoverRadius: 15,
+      }, {
+        label: 'SI',
+        type: 'line',
+        backgroundColor: 'green',
+        borderColor: 'green',
+        data: speedIndexData,
+        fill: false,
+        pointRadius: 10,
+        pointHoverRadius: 15,
+      }, {
+        label: 'LCP',
+        type: 'line',
+        backgroundColor: 'brown',
+        borderColor: 'brown',
+        data: largestContentfulPaintData,
+        fill: false,
+        pointRadius: 10,
+        pointHoverRadius: 15,
+      }, {
+        label: 'TTI',
+        type: 'line',
+        backgroundColor: 'darkcyan',
+        borderColor: 'darkcyan',
+        data: interactivepDatainteractivepData,
+        fill: false,
+        pointRadius: 10,
+        pointHoverRadius: 15,
+      }, {
+        label: 'TBT',
+        type: 'line',
+        backgroundColor: 'indigo',
+        borderColor: 'indigo',
+        data: totalBlockingTimeData,
+        fill: false,
+        pointRadius: 10,
+        pointHoverRadius: 15,
+      }, {
+        label: 'CLS',
+        type: 'line',
+        backgroundColor: 'olive',
+        borderColor: 'olive',
+        data: cumulativeLayoutShiftData,
+        fill: false,
+        pointRadius: 10,
+        pointHoverRadius: 15,
+      }, {
+        label: 'Score',
+        backgroundColor: 'rgb(255, 99, 132)',
+        borderColor: 'rgb(255, 99, 132)',
+        data: scoreData,
+        fill: false,
+        pointRadius: 10,
+        pointHoverRadius: 15,
+      }, 
+    ],
+  };
+}

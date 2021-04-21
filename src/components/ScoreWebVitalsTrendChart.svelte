@@ -2,13 +2,13 @@
   import dayjs from 'dayjs';
   import Chart from 'chart.js';
   import { createEventDispatcher, onMount } from 'svelte';
-  import { mapTrend } from '../helpers/chart-helpers.js';
+  import { mapScoreWebVitalsTrend } from '../helpers/chart-helpers.js';
 
   export let data;
   let chartCanvas;
   const dispatch = createEventDispatcher();
 
-  const chartData = mapTrend(data);
+  const chartData = mapScoreWebVitalsTrend(data);
 
   onMount(async () => {
     const ctx = chartCanvas.getContext('2d');
