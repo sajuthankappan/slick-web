@@ -30,13 +30,21 @@
       const idToken = await $currentUser.getIdToken();
       saveSitePromise = addSite(site, idToken);
     }
-    
   }
 
   async function handleCloseClicked(e) {
     e.preventDefault();
     isActive = false;
     dispatch('close', { message: 'Cancelled' });
+  }
+
+  async function handleAddPageClicked(e) {
+    e.preventDefault();
+    const newPage = {
+      newRow: true
+    };
+    site.pages.push(newPage);
+    site = site;
   }
 </script>
 
@@ -79,7 +87,7 @@
               {#each site.pages as page}
               <tr>
                 <td>
-                  <input class="input" type="text" bind:value={page.id} required readonly/>
+                  <input class="input" type="text" bind:value={page.id} required readonly={!page.newRow} />
                 </td>
                 <td>
                   <input class="input" type="text" bind:value={page.name} required/>
@@ -90,6 +98,9 @@
               </tr>
               {/each}
             </tbody>
+            <footer>
+              <button class="button is-small" on:click={handleAddPageClicked}>Add Page</button>
+            </footer>
           </table>
         </div>
         <div class="py-4">
@@ -116,7 +127,7 @@
                     <input class="input" type="text" bind:value={profile.device} required readonly />
                   </td>
                   <td>
-                    <input class="input" type="text" bind:value={profile.lighthouseVersion} required readonly />
+                    <input class="input" type="text" bind:value={profile.lighthouseVersion} required />
                   </td>
                 </tr>
               {/each}
