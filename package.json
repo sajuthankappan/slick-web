@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "bulma": "^0.9.1",
-    "chart.js": "^2.9.3",
+    "chart.js": "^2.9.4",
     "compression": "^1.7.1",
     "dayjs": "^1.9.1",
     "dotenv": "^8.2.0",
