@@ -57,7 +57,7 @@
     <div class="field">
       <div class="label">FCI (First CPU Idle)</div>
       <div class="control">
-        {data.firstCpuIdle.displayValue} (Score: {Math.round(data.firstCpuIdle.score * 100)})
+        {data.firstCpuIdle?.displayValue} (Score: {Math.round(data.firstCpuIdle?.score * 100)})
       </div>
     </div>
     <div class="field">
